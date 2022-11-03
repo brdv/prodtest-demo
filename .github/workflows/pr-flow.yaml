@@ -38,7 +38,7 @@ jobs:
         args: >
           -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-          -Dsonar.cs.opencover.reportsPaths
+          -Dsonar.cs.opencover.reportsPaths=./ProdtestApi.Test.TestResults/*/coverage.cobertura.xml
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
