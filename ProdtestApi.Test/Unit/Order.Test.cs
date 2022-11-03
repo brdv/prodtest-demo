@@ -20,6 +20,7 @@ public class OrderModelTests
 
         Assert.IsNotNull(result.TotalPrice);
         Assert.AreEqual(result.TotalPrice, totalPrice);
+        Assert.AreEqual(result.Items, items);
     }
 
     [TestMethod]
