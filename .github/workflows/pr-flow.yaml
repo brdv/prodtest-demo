@@ -22,7 +22,7 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Test
-        run: "dotnet test --no-restore --verbosity normal --collect: \"XPlat Code Coverage"\"
+        run: dotnet test --no-restore --verbosity normal
   sonarcloud:
     name: SonarCloud
     runs-on: windows-latest
@@ -66,6 +66,6 @@ jobs:
           # The organization and project arguments (see /o and /k) are displayed
           # on the project dashboard in SonarCloud.
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"SonarSource_sonarcloud-github-action-samples" /o:"sonarsource" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build SomeConsoleApplication.sln
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"SonarSource_sonarcloud-github-action-samples" /o:"${{ secters.SONAR_ORGANIZATION }}" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+          dotnet build ProdTestDemo.sln
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
