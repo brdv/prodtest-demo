@@ -1,19 +1,16 @@
-name: Pull Request checks
+name: Merge checks
 
 on:
   pull_request:
     branches:
       - main
-      - sprint
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
         dotnet-version: ['6.x.x' ]
-
     steps:
       - uses: actions/checkout@v3
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
@@ -35,6 +32,10 @@ jobs:
         fetch-depth: 0
     - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@master
+      with:
+        args: >
+          -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+          -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
