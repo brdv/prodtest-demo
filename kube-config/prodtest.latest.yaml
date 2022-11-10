@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prodtestapi-latest-deployment
+  name: prodtestapi-latest
   labels:
     app: prodtestapi-latest
 spec:
@@ -19,21 +19,19 @@ spec:
       - name: prodtestapi-latest
         image: brdv/prodtest:latest
         ports:
-        - containerPort: 80
+        - name: web
+          containerPort: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: prodtestapi-latest-service
+  name: prodtestapi-latest
+
 spec:
-  # external service type
-  type: NodePort
-  selector:
-    # should match deployment label
-    app: prodtestapi-latest
   ports:
-    - protocol: TCP
+    - name: web
       port: 80
-      # port of the pod of the service (containerPort)
-      targetPort: 80
-      nodePort: 30000
+      targetPort: web
+
+  selector:
+    app: prodtestapi-latest

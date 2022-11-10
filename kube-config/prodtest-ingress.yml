@@ -10,6 +10,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: prodtestapi-latest-service
+            name: prodtestapi-latest
             port:
               name: web
