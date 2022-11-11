@@ -11,5 +11,3 @@ kubectl apply -f ./kube-config/prodtest-ingress.yml \
 
 # check if everything is up and running
 kubectl get all
-
-echo "\nNOTE: If you have encountered an error, please make sure minikube is running.\n"
