@@ -1,0 +1,15 @@
+# Mirroring from a k8s Service
+apiVersion: traefik.containo.us/v1alpha1
+kind: TraefikService
+metadata:
+  name: dl-mirror
+  namespace: default
+
+spec:
+  mirroring:
+    name: prodtest-latest
+    port: 80
+    mirrors:
+      - name: prodtest-next
+        port: 80
+        percent: 100
