@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prodtestapi-latest
+  labels:
+    app: prodtestapi-latest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prodtestapi-latest
+  template:
+    metadata:
+      labels:
+        app: prodtestapi-latest
+    # Specifies a pod with one container
+    spec:
+      containers:
+      - name: prodtestapi-latest
+        image: brdv/prodtest:latest
+        ports:
+        - name: web
+          containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prodtestapi-latest
+
+spec:
+  ports:
+    - name: web
+      port: 80
+      targetPort: web
+
+  selector:
+    app: prodtestapi-latest
