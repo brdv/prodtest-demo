@@ -24,8 +24,6 @@ Follow the guide below to setup and start the project.
 
 1.  Once all prerquisites are installed, make sure you have a docker kubernetes cluster running following [this guide](https://docs.docker.com/desktop/kubernetes/#enable-kubernetes).
 
-        **Check kubectl installation**
-
 2.  Next make sure the docker-desktop kubernetes context is selected for kubectl:
 
     ```bash
