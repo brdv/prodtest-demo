@@ -1,3 +1,7 @@
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/summary/new_code?id=prodtest-demo)
+
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=prodtest-demo&metric=coverage&token=9005461108c59dec16be6c57760d5aaaea5d6564)](https://sonarcloud.io/summary/new_code?id=prodtest-demo) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=prodtest-demo&metric=alert_status&token=9005461108c59dec16be6c57760d5aaaea5d6564)](https://sonarcloud.io/summary/new_code?id=prodtest-demo) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=prodtest-demo&metric=sqale_rating&token=9005461108c59dec16be6c57760d5aaaea5d6564)](https://sonarcloud.io/summary/new_code?id=prodtest-demo) [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=prodtest-demo&metric=vulnerabilities&token=9005461108c59dec16be6c57760d5aaaea5d6564)](https://sonarcloud.io/summary/new_code?id=prodtest-demo)
+
 # Prodtest demo
 
 This is the readme for the prodtest demo project. For more information, check the [docs](https://brdv.github.io/prodtest-docs).

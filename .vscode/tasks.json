@@ -7,19 +7,7 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/ProdtestApi/ProdtestApi.csproj",
-        "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
-      ],
-      "problemMatcher": "$msCompile"
-    },
-    {
-      "label": "publish",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "publish",
-        "${workspaceFolder}/ProdtestApi/ProdtestApi.csproj",
+        "${workspaceFolder}/src/ProdtestApi/ProdtestApi.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -33,7 +21,7 @@
         "watch",
         "run",
         "--project",
-        "${workspaceFolder}/ProdtestApi/ProdtestApi.csproj"
+        "${workspaceFolder}/src/ProdtestApi/ProdtestApi.csproj"
       ],
       "problemMatcher": "$msCompile"
     },
@@ -44,7 +32,7 @@
       "type": "process",
       "args": [
         "test",
-        "${workspaceFolder}/ProdtestApi.Test/ProdtestApi.Test.csproj",
+        "${workspaceFolder}/src/ProdtestApi.Test/ProdtestApi.Test.csproj",
         "--collect: \"XPlat Code Coverage\""
       ],
       "problemMatcher": "$msCompile",
@@ -58,7 +46,7 @@
       "dependsOn": [],
       "command": "rm",
       "type": "process",
-      "args": ["-rf", "${workspaceFolder}/ProdtestApi.Test/TestResults"],
+      "args": ["-rf", "${workspaceFolder}/src/ProdtestApi.Test/TestResults"],
       "problemMatcher": "$msCompile",
       "group": {
         "kind": "test",
