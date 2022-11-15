@@ -19,7 +19,7 @@ public class ApiControllerTest
         Assert.IsInstanceOfType(result, typeof(OkObjectResult));
         Assert.IsNotNull(okObjectResult);
 
-        Assert.AreEqual(okObjectResult.StatusCode, 200);
-        Assert.AreEqual(okObjectResult.Value, "{\"health\": \"ok\" }");
+        Assert.AreEqual(200, okObjectResult.StatusCode);
+        Assert.AreEqual("{\"health\": \"ok\" }", okObjectResult.Value);
     }
 }
