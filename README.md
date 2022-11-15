@@ -61,11 +61,20 @@ Follow the guide below to setup and start the project.
     This will apply all resources to the cluster. You will see all resources in the console. (Run `kubectl get all` if they do not show up.)
 
 4.  Go to http://localhost/api/health, you should see a json object as follows:
+
     ```json
     {
       "health": "ok"
     }
     ```
+
+5.  To see the traefik dashboard, run the following command:
+
+    ```bash
+    kubectl port-forward $(kubectl get pods --selector "app.kubernetes.io/name=traefik" --output=name) 9000:9000
+    ```
+
+    Leave the shell open and go to http://localhost:9000/dashboard/
 
 ## Other commands
 
