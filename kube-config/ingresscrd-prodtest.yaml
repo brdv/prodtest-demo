@@ -1,0 +1,14 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: prodtestlatest-crd
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`localhost`)
+      services:
+        - name: dl-mirror
+          namespace: default
+          kind: TraefikService

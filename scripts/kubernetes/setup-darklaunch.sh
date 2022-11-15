@@ -1,13 +1,15 @@
 # first, traefik has to be authorized:
-kubectl apply -f ./kube-config/traefik-setup/00-role.yml \
-              -f ./kube-config/traefik-setup/00-account.yml \
-              -f ./kube-config/traefik-setup/01-role-binding.yml \
-              -f ./kube-config/traefik-setup/02-traefik.yml \
-              -f ./kube-config/traefik-setup/02-traefik-services.yml
+helm repo add traefik https://traefik.github.io/charts
+helm repo update
+helm install traefik-dl traefik/traefik --version 20.1.0
+
+echo "\nAdded and applied traefik helm: https://artifacthub.io/packages/helm/traefik/traefik\n"
 
 # secondly, apply the prodtest configurations
-kubectl apply -f ./kube-config/prodtest-ingress.yml \
-              -f ./kube-config/prodtest.latest.yaml
+kubectl apply -f ./kube-config/ingresscrd-prodtest.yaml \
+              -f ./kube-config/prodtest.latest.yaml \
+              -f ./kube-config/prodtest.next.yaml \
+              -f ./kube-config/traefik-service-mirror.yml
 
 # check if everything is up and running
 kubectl get all
