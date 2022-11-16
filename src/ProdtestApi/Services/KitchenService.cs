@@ -7,23 +7,19 @@ public class KitchenService : IKitchenService
     private static int _speed = 1;
     public OrderHandled handleOrder(Order order)
     {
+        // Stryker disable once all : non critital functionality.
+        var actualPrepTime = order.TotalPrepTime / _speed;
+
+        // Stryker disable once all : non critital functionality.
+        Thread.Sleep(actualPrepTime * 100);
+
         var handled = new OrderHandled
         (
           order.Id,
           order.TotalPrepTime,
-          prepOrder(order)
+          actualPrepTime
         );
 
         return handled;
-    }
-
-    private int prepOrder(Order order)
-    {
-        var rand = new Random();
-        var speed = (rand.NextDouble() + 1) / _speed;
-
-        var time = speed * order.TotalPrepTime;
-
-        return (int)Math.Round(time);
     }
 }

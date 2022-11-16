@@ -24,8 +24,13 @@ public class OrderControllerTests
 
         Assert.IsNotNull(okObjectResult);
         Assert.IsInstanceOfType(okObjectResult, typeof(OkObjectResult));
-
         Assert.IsInstanceOfType(okObjectResult.Value, typeof(List<MenuItemResponse>));
+
+        var resultAsList = okObjectResult.Value as List<MenuItemResponse>;
+
+        Assert.IsNotNull(resultAsList);
+
+        Assert.AreEqual("Burger", resultAsList[0].Name);
     }
 
     [TestMethod]
