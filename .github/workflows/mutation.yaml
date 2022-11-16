@@ -14,6 +14,7 @@ jobs:
       - uses: tom171296/run-stryker-net@main
         with:
           testProject: 'src/ProdtestApi.Test/'
+          breakAt: '70'
       - uses: actions/upload-artifact@v3
         with:
           name: html-report
