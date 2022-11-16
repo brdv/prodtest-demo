@@ -3,9 +3,10 @@ name: Stryker Mutation testing
 on:
   pull_request:
     branches:
-      - develop
       - main
-  jobs:
+      - develop
+
+jobs:
   mutation-test:
     uses: actions/checkout@v3
 
