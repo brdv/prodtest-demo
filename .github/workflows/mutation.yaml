@@ -7,14 +7,14 @@ on:
       - develop
 
 jobs:
-  mutation-test:
-    uses: actions/checkout@v3
-    uses: tom171296/run-stryker-net@vmain
-      with:
-        testProject: "ProdtestApi.Test/"
-
-    uses: actions/upload-artifact@v3
-    with:
-      name: html-report
-      path: ${{github.workspace}}/src/ProdtestApi.Test/StrykerOutput/**/**/*.html
-
+  mutation-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: tom171296/run-stryker-net@vmain
+        with:
+          testProject: 'src/ProdtestsApi.Test/'
+      - uses: actions/upload-artifact@v3
+        with:
+          name: html-report
+          path: ${{github.workspace}}/src/ProdtestApi.Test/StrykerOutput/**/**/*.html
