@@ -10,8 +10,8 @@ jobs:
   mutation-test:
     uses: actions/checkout@v3
     uses: tom171296/run-stryker-net@vmain
-    with:
-      testProject: "src/ProdtestsApi.Test/"
+      with:
+        testProject: "ProdtestApi.Test/"
 
     uses: actions/upload-artifact@v3
     with:
