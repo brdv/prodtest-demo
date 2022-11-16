@@ -12,6 +12,7 @@ public class OrdersController : ApiController
 
     public OrdersController(IKitchenService kitchenService)
     {
+        // Stryker disable once all : non critical funcitonality
         _items = new Dictionary<string, MenuItem>{
             {"burger", new MenuItem(Guid.NewGuid(), "Burger", 5, 3.50)},
             {"fries", new MenuItem(Guid.NewGuid(), "Fries", 2, 1.50)},
@@ -31,7 +32,6 @@ public class OrdersController : ApiController
     [HttpPost("")]
     public IActionResult PostOrder(CreateOrderRequest orderCreate)
     {
-        // add validation for itemId
         var orderItems = orderCreate.ItemIds.Select(i => _items[i]).ToList();
 
         var order = new Order(
@@ -46,6 +46,7 @@ public class OrdersController : ApiController
 
     private MenuItemResponse MapMenuItemToResponse(MenuItem item)
     {
+        // Stryker disable once all : non critital functionality.
         return new MenuItemResponse(
             item.Name,
             item.PreparationTime,

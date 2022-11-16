@@ -27,5 +27,6 @@ public class KitchenServiceTest
         Assert.AreEqual(result.totalPrepTime, order.TotalPrepTime);
         Assert.IsNotNull(result.actualPrepTime);
 
+        Assert.IsTrue(result.actualPrepTime <= order.TotalPrepTime);
     }
 }

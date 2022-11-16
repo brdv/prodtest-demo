@@ -1,0 +1,12 @@
+{
+  "stryker-config":
+  {
+      "reporters": [
+          "progress",
+          "html",
+          "cleartext"
+      ],
+      "solution": "../ProdtestDemo.sln",
+      "project": "ProdtestApi"
+  }
+}
