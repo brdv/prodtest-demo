@@ -1,4 +1,4 @@
-name: Merge checks
+name: Quality checks
 
 on:
   pull_request:
@@ -23,12 +23,12 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore ./src
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build ./src --configuration Release --no-restore
       - name: Test
         run: |
-          dotnet test --no-restore --verbosity normal
+          dotnet test ./src --no-restore --verbosity normal
   sonar:
     name: Sonar
     runs-on: ubuntu-latest
@@ -56,6 +56,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           dotnet-sonarscanner begin /k:"prodtest-demo" /o:"isbumpafstuderen" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=**/TestResults/**/coverage.opencover.xml
-          dotnet build
-          dotnet test --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          dotnet build ./src
+          dotnet test ./src --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

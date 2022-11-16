@@ -1,6 +1,7 @@
-kubectl delete --all service
-kubectl delete --all deployments
-kubectl delete --all ingress
+kubectl delete service prodtest-latest prodtest-next traefik-dl 
+kubectl delete deployment prodtest-latest prodtest-next traefik-dl 
+kubectl delete ingressRoute traefik-dl-dashboard prodtestlatest-crd
+
 helm uninstall traefik-dl
 
 echo "\n"
