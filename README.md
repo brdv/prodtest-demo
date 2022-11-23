@@ -104,3 +104,12 @@ There are a few other commands that can be helpfull during testing or developmen
    ```bash
    sh ./scripts/docker/latest.deploy.sh
    ```
+
+3. Simulate API requests
+
+   In order to simulate API requests, you can use the script `simulate_api_calls.sh`. This script will by default call the api 500 times and save the responses to `temp/request_output.json`.
+   Use the script as follows:
+
+   ```bash
+   sh ./scripts/simulate_api_calls.sh
+   ```

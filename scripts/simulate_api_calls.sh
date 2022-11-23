@@ -12,16 +12,17 @@ function call {
 }
 
 NO_CALLS=1000
+RESPONSE_FILE="temp/request_output.json"
 
-if [ -f "file.json" ]; then
-   rm "file.json"
-   echo ""file.json" is removed"
+if [ -f $RESPONSE_FILE ]; then
+   rm $RESPONSE_FILE
+   echo "File: $RESPONSE_FILE is removed"
 fi
 
 
 echo "This is the script to call the prodtest api.\n"
 
-# generate help message
+# Check options
 while test $# -gt 0; do
     case $1 in
         -h|--help)
@@ -47,22 +48,19 @@ echo "API will be called $NO_CALLS times"
 
 COUNT=0
 
-echo "[" >> file.json
+echo "[" >> $RESPONSE_FILE
 
 while test $COUNT -lt $NO_CALLS; do
-    
-    # echo "\nCall number $COUNT:"
     # function as defined above.
     output=$(call)
-    # output=\'$output\'
-    # echo $output
-    echo "${output}" | jq >> file.json
+
+    echo "${output}" | jq >> $RESPONSE_FILE
     ((COUNT=COUNT+1))
     if test $COUNT -lt $NO_CALLS; then
-        echo "," >> file.json
+        echo "," >> $RESPONSE_FILE
     fi
 done
 
-echo "]" >> file.json
+echo "]" >> $RESPONSE_FILE
 
-echo "See file.json for results"
+echo "See '$RESPONSE_FILE' for results"
