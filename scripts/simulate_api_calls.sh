@@ -1,13 +1,15 @@
-function help {
+#!/bin/bash
+
+help() {
     echo "Use this script as follows:"
-    echo "  sh ./test.sh [options]\n"
+    echo "  sh path/to/simulate_api_calls.sh [options]\n"
     echo "Options are as follows:"
     echo "  -n: number -> number of times the api should be called.\n"
     echo "  -h: bool -> call for the help message.\n"
     exit {0}
 }
 
-function call {
+call() {
     curl --request POST -H "Content-Type:application/json" http://localhost/orders --data "{\"ItemIds\": [\"burger\", \"fries\"]}" --silent 
 }
 
@@ -45,11 +47,11 @@ done
 
 echo "API will be called $NO_CALLS times"
 
-
 COUNT=0
 
 echo "[" >> $RESPONSE_FILE
 
+# call api NO_CALLS times and append response to RESPONSE_FILE
 while test $COUNT -lt $NO_CALLS; do
     # function as defined above.
     output=$(call)
