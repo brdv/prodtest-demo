@@ -88,7 +88,7 @@ Follow the guide below to setup and start the project.
 
 There are a few other commands that can be helpfull during testing or development.
 
-1. Cleanup kubernetes and helm char
+1. Cleanup kubernetes and helm charts
 
    If for any reason you want to clean up the configured kubernetes resources you can enter the following command in the terminal:
 
