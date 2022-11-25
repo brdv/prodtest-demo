@@ -113,3 +113,5 @@ There are a few other commands that can be helpfull during testing or developmen
    ```bash
    sh ./scripts/simulate_api_calls.sh
    ```
+
+   \* _In case of an error like 'jq command does not exist' [install jq](https://stedolan.github.io/jq/download/)_
