@@ -88,7 +88,7 @@ Follow the guide below to setup and start the project.
 
 There are a few other commands that can be helpfull during testing or development.
 
-1. Cleanup kubernetes and helm char
+1. Cleanup kubernetes and helm charts
 
    If for any reason you want to clean up the configured kubernetes resources you can enter the following command in the terminal:
 
@@ -104,3 +104,14 @@ There are a few other commands that can be helpfull during testing or developmen
    ```bash
    sh ./scripts/docker/latest.deploy.sh
    ```
+
+3. Simulate API requests
+
+   In order to simulate API requests, you can use the script `simulate_api_calls.sh`. This script will by default call the api 500 times and save the responses to `temp/request_output.json`.
+   Use the script as follows:
+
+   ```bash
+   sh ./scripts/simulate_api_calls.sh
+   ```
+
+   \* _In case of an error like 'jq command does not exist' [install jq](https://stedolan.github.io/jq/download/)_
