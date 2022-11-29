@@ -1,3 +1,3 @@
-docker build -t prodtestapi:vnext ./ProdtestApi
-docker tag prodtestapi:vnext brdv/prodtest:vnext
-docker push brdv/prodtest:vnext
+docker build -t RegisterService:vnext ./RegisterService
+docker tag RegisterService:vnext brdv/RegisterService:vnext
+docker push brdv/RegisterService:vnext

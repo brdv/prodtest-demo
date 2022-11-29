@@ -1,3 +1,3 @@
-docker build -t prodtestapi:latest ./ProdtestApi
-docker tag prodtestapi:latest brdv/prodtest:latest
-docker push brdv/prodtest:latest
+docker build -t RegisterService:latest ./RegisterService
+docker tag RegisterService:latest brdv/RegisterService:latest
+docker push brdv/RegisterService:latest
