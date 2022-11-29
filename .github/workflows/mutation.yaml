@@ -13,9 +13,9 @@ jobs:
       - uses: actions/checkout@v3
       - uses: tom171296/run-stryker-net@main
         with:
-          testProject: 'src/ProdtestApi.Test/'
+          testProject: 'src/RegisterService.Tests/'
           breakAt: '70'
       - uses: actions/upload-artifact@v3
         with:
           name: html-report
-          path: ${{github.workspace}}/src/ProdtestApi.Test/StrykerOutput/**/**/*.html
+          path: ${{github.workspace}}/src/RegisterService.Tests/StrykerOutput/**/**/*.html
