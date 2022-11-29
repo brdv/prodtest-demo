@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProdtestApi\ProdtestApi.csproj" />
+    <ProjectReference Include="..\RegisterService\RegisterService.csproj" />
   </ItemGroup>
 
 </Project>
