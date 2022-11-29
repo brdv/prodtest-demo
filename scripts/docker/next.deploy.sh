@@ -1,3 +1,3 @@
-docker build -t RegisterService:vnext ./RegisterService
-docker tag RegisterService:vnext brdv/RegisterService:vnext
-docker push brdv/RegisterService:vnext
+docker build -t register-service:vnext ./src/RegisterService
+docker tag register-service:vnext brdv/register-service:vnext
+docker push brdv/register-service:vnext

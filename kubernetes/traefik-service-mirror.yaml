@@ -7,9 +7,9 @@ metadata:
 
 spec:
   mirroring:
-    name: prodtest-latest
+    name: register-service-latest
     port: 80
     mirrors:
-      - name: prodtest-next
+      - name: register-service-next
         port: 80
         percent: 100

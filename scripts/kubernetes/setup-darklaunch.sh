@@ -7,8 +7,8 @@ echo "\nAdded and applied traefik helm: https://artifacthub.io/packages/helm/tra
 
 # secondly, apply the prodtest configurations
 kubectl apply -f ./kubernetes/ingresscrd-prodtest.yaml \
-              -f ./kubernetes/prodtest.latest.yaml \
-              -f ./kubernetes/prodtest.next.yaml \
+              -f ./kubernetes/register-service.latest.yaml \
+              -f ./kubernetes/register-service.next.yaml \
               -f ./kubernetes/traefik-service-mirror.yaml
 
 # check if everything is up and running
