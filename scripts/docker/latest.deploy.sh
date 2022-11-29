@@ -1,3 +1,3 @@
-docker build -t RegisterService:latest ./RegisterService
-docker tag RegisterService:latest brdv/RegisterService:latest
-docker push brdv/RegisterService:latest
+docker build -t register-service:latest ./src/RegisterService
+docker tag register-service:latest brdv/register-service:latest
+docker push brdv/register-service:latest

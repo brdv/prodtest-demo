@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prodtest-next
+  name: register-service-latest
   labels:
-    app: prodtest-next
+    app: register-service-latest
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: prodtest-next
+      app: register-service-latest
   template:
     metadata:
       labels:
-        app: prodtest-next
+        app: register-service-latest
     # Specifies a pod with one container
     spec:
       containers:
-        - name: prodtest-next
-          image: brdv/prodtest:vnext
+        - name: register-service-latest
+          image: brdv/register-service:latest
           ports:
             - name: web
               containerPort: 80
@@ -25,7 +25,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: prodtest-next
+  name: register-service-latest
 
 spec:
   ports:
@@ -34,4 +34,4 @@ spec:
       targetPort: web
 
   selector:
-    app: prodtest-next
+    app: register-service-latest
