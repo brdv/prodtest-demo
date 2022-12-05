@@ -10,6 +10,10 @@
 
 This is the readme for the prodtest demo project. For more information, check the [docs](https://brdv.github.io/prodtest-docs).
 
+The current project architecture is as follows:
+
+![Project Architecture](./assets/simple-architecture-dl.png)
+
 ## Contents
 
 The contents of this Readme are:

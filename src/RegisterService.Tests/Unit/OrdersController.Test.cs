@@ -10,11 +10,11 @@ namespace ProdtestApi.Test.Unit;
 [TestClass]
 public class OrderControllerTests
 {
-    private Mock<IKitchenService> mock { get; } = new Mock<IKitchenService>();
-
     [TestMethod]
     public void Get_OrdersMenuItems_Returns_ListOfMenuItems()
     {
+        Mock<IKitchenService> mock = new Mock<IKitchenService>(MockBehavior.Strict);
+
         IKitchenService mockService = mock.Object;
         OrdersController controller = new OrdersController(mockService);
 
@@ -36,6 +36,8 @@ public class OrderControllerTests
     [TestMethod]
     public void Post_NewOrder_Returns_OrderHandled()
     {
+        Mock<IKitchenService> mock = new Mock<IKitchenService>(MockBehavior.Strict);
+
         var testOrderHandeled = GetTestOrderHandled();
 
         mock.Setup(service => service.handleOrder(It.IsAny<Order>())).Returns(testOrderHandeled);

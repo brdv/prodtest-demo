@@ -18,6 +18,7 @@ spec:
       containers:
         - name: register-service-latest
           image: brdv/register-service:latest
+          imagePullPolicy: Never # > This option is set to never to use local images.
           ports:
             - name: web
               containerPort: 80
