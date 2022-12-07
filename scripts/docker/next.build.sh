@@ -1,0 +1,1 @@
+docker build -t brdv/register-service:vnext ./src/RegisterService

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: register-service-latest
+  labels:
+    app: register-service-latest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: register-service-latest
+  template:
+    metadata:
+      labels:
+        app: register-service-latest
+    # Specifies a pod with one container
+    spec:
+      containers:
+        - name: register-service-latest
+          image: brdv/register-service:latest
+          imagePullPolicy: Never # > This option is set to never to use local images.
+          ports:
+            - name: web
+              containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: register-service-latest
+
+spec:
+  ports:
+    - name: web
+      port: 80
+      targetPort: web
+
+  selector:
+    app: register-service-latest

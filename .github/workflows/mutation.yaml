@@ -1,0 +1,21 @@
+name: Stryker Mutation testing
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  mutation-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: tom171296/run-stryker-net@main
+        with:
+          testProject: 'src/RegisterService.Tests/'
+          breakAt: '70'
+      - uses: actions/upload-artifact@v3
+        with:
+          name: html-report
+          path: ${{github.workspace}}/src/RegisterService.Tests/StrykerOutput/**/**/*.html
