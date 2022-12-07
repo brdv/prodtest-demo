@@ -7,7 +7,7 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/src/RegisterService/RegisterService.csproj",
+        "${workspaceFolder}/src/Services/Order/Order.API/Order.API.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -21,7 +21,7 @@
         "watch",
         "run",
         "--project",
-        "${workspaceFolder}/src/RegisterService/RegisterService.csproj"
+        "${workspaceFolder}/src/Services/Order/Order.API/Order.API.csproj"
       ],
       "problemMatcher": "$msCompile"
     },
@@ -32,7 +32,7 @@
       "type": "process",
       "args": [
         "test",
-        "${workspaceFolder}/src/RegisterService.Tests/RegisterService.Tests.csproj",
+        "${workspaceFolder}/src/Services/Order/Order.API.Tests/Order.API.Tests.csproj",
         "--collect: \"XPlat Code Coverage\""
       ],
       "problemMatcher": "$msCompile",
@@ -48,7 +48,7 @@
       "type": "process",
       "args": [
         "-rf",
-        "${workspaceFolder}/src/RegisterService.Tests/TestResults"
+        "${workspaceFolder}/src/Services/Order/Order.Api.Tests/TestResults"
       ],
       "problemMatcher": "$msCompile",
       "group": {
