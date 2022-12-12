@@ -7,7 +7,7 @@ on:
       - 'sprint/**'
 
 jobs:
-  pr-flow:
+  run-checks:
     uses: brdv/prodtest-demo/.github/workflows/service-check.yaml@fix/split-order-kitchen-service
     with:
       project_dir: 'src/Common/Domain.Common'
