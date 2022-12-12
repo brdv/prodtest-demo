@@ -1,8 +1,8 @@
-using ProdtestApi.Controllers;
+using Order.API.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
 
-namespace ProdtestApi.Test.Unit;
+namespace Order.API.Test.Unit;
 
 [TestClass]
 public class ApiControllerTest

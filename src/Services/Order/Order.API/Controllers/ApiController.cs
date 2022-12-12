@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace ProdtestApi.Controllers;
+namespace Order.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]

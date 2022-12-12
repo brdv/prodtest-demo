@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using ProdtestApi.Services;
-using ProdtestApi.Controllers;
-using ProdtestApi.Contracts;
-using ProdtestApi.Models;
+using Order.API.Services;
+using Order.API.Controllers;
+using Order.API.Contracts;
+using Order.API.Models;
 
-namespace ProdtestApi.Test.Unit;
+namespace Order.API.Test.Unit;
 
 [TestClass]
 public class OrderControllerTests
@@ -40,7 +40,7 @@ public class OrderControllerTests
 
         var testOrderHandeled = GetTestOrderHandled();
 
-        mock.Setup(service => service.handleOrder(It.IsAny<Order>())).Returns(testOrderHandeled);
+        mock.Setup(service => service.handleOrder(It.IsAny<OrderModel>())).Returns(testOrderHandeled);
         IKitchenService mockService = mock.Object;
 
         OrdersController controller = new OrdersController(mockService);

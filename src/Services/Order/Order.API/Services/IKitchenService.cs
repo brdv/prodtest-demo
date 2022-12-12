@@ -1,8 +1,8 @@
-using ProdtestApi.Models;
+using Order.API.Models;
 
-namespace ProdtestApi.Services;
+namespace Order.API.Services;
 
 public interface IKitchenService
 {
-    OrderHandled handleOrder(Order order);
+    OrderHandled handleOrder(OrderModel order);
 }

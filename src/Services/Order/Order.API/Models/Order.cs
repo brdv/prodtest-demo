@@ -1,13 +1,13 @@
-namespace ProdtestApi.Models;
+namespace Order.API.Models;
 
-public class Order
+public class OrderModel
 {
     public Guid Id { get; }
     public List<MenuItem> Items { get; }
     public double TotalPrice { get; }
     public int TotalPrepTime { get; }
 
-    public Order(
+    public OrderModel(
       Guid id,
       List<MenuItem> items)
     {

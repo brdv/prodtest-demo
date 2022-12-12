@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using ProdtestApi.Models;
-using ProdtestApi.Contracts;
-using ProdtestApi.Services;
+using Order.API.Models;
+using Order.API.Contracts;
+using Order.API.Services;
 
-namespace ProdtestApi.Controllers;
+namespace Order.API.Controllers;
 
 public class OrdersController : ApiController
 {
@@ -34,7 +34,7 @@ public class OrdersController : ApiController
     {
         var orderItems = orderCreate.ItemIds.Select(i => _items[i]).ToList();
 
-        var order = new Order(
+        var order = new OrderModel(
             Guid.NewGuid(),
             orderItems
         );

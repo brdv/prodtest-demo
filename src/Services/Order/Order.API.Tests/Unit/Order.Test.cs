@@ -1,5 +1,5 @@
-using ProdtestApi.Models;
-namespace ProdtestApi.Test.Unit;
+using Order.API.Models;
+namespace Order.API.Test.Unit;
 
 
 [TestClass]
@@ -14,7 +14,7 @@ public class OrderModelTests
     [TestMethod]
     public void Creating_NewOrder_CalculatesTotalPrice_Correctly()
     {
-        Order result = new Order(Guid.NewGuid(), items);
+        OrderModel result = new OrderModel(Guid.NewGuid(), items);
         double totalPrice = 0;
         items.ForEach(i => totalPrice += i.Price);
 
@@ -26,7 +26,7 @@ public class OrderModelTests
     [TestMethod]
     public void Creating_NewOrderCalculates_TotalPrepTime_Correctly()
     {
-        Order result = new Order(Guid.NewGuid(), items);
+        OrderModel result = new OrderModel(Guid.NewGuid(), items);
 
         double totalPrepTime = 0;
         items.ForEach(i => totalPrepTime += i.PreparationTime);

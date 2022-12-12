@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "ProdtestApi": {
+    "Order.API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

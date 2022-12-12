@@ -1,4 +1,4 @@
-namespace ProdtestApi.Models;
+namespace Order.API.Models;
 
 public class MenuItem
 {

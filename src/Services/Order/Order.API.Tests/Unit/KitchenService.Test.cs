@@ -1,13 +1,13 @@
 
-using ProdtestApi.Models;
-using ProdtestApi.Services;
+using Order.API.Models;
+using Order.API.Services;
 
-namespace ProdtestApi.Test.Unit;
+namespace Order.API.Test.Unit;
 
 [TestClass]
 public class KitchenServiceTest
 {
-    Order order = new Order(
+    OrderModel order = new OrderModel(
         Guid.NewGuid(),
         new List<MenuItem>(){
             new MenuItem(Guid.NewGuid(), "Burger", 4, 2.50),

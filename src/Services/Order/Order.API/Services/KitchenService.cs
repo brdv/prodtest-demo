@@ -1,11 +1,11 @@
-using ProdtestApi.Models;
+using Order.API.Models;
 
-namespace ProdtestApi.Services;
+namespace Order.API.Services;
 
 public class KitchenService : IKitchenService
 {
     private static int _speed = 1;
-    public OrderHandled handleOrder(Order order)
+    public OrderHandled handleOrder(OrderModel order)
     {
         // Stryker disable once all : non critital functionality.
         var actualPrepTime = order.TotalPrepTime / _speed;
