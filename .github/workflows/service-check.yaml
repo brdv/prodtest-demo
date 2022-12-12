@@ -27,7 +27,6 @@ jobs:
       - name: Test
         run: |
           dotnet test ${{ inputs.project_dir }} --no-restore --verbosity normal
-
   mutation_test:
     runs-on: ubuntu-latest
       steps:
