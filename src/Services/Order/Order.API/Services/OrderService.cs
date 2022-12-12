@@ -5,7 +5,7 @@ namespace Order.API.Services;
 
 public class OrderService : IOrderService
 {
-    private Dictionary<string, MenuItem> _items = new Dictionary<string, MenuItem>{
+    private readonly Dictionary<string, MenuItem> _items = new Dictionary<string, MenuItem>{
         {"burger", new MenuItem(Guid.NewGuid(), "Burger", 5, 3.50)},
         {"fries", new MenuItem(Guid.NewGuid(), "Fries", 2, 1.50)},
         {"soda", new MenuItem(Guid.NewGuid(), "Soda", 1, 1.50)}

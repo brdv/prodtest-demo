@@ -15,7 +15,7 @@ public class OrderServiceTests
         var result = _service.GetMenuItems();
 
         Assert.IsNotNull(result);
-        Assert.AreNotEqual(0, result.Count());
+        Assert.AreNotEqual(0, result.Count);
         foreach (MenuItemResponse item in result)
         {
             Assert.IsFalse(String.IsNullOrEmpty(item.Name));
@@ -35,7 +35,7 @@ public class OrderServiceTests
 
         // assert
         Assert.IsNotNull(result);
-        Assert.AreEqual(postData.MenuItems.Count(), result.Items.Count());
+        Assert.AreEqual(postData.MenuItems.Count, result.Items.Count);
         Assert.IsInstanceOfType(result.Id, typeof(Guid));
     }
 }

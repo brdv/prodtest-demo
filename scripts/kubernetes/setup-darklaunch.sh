@@ -6,10 +6,10 @@ helm install traefik-dl traefik/traefik --version 20.1.0
 echo "\nAdded and applied traefik helm: https://artifacthub.io/packages/helm/traefik/traefik\n"
 
 # secondly, apply the prodtest configurations
-kubectl apply -f ./kubernetes/ingresscrd-prodtest.yaml \
-              -f ./kubernetes/register-service.latest.yaml \
-              -f ./kubernetes/register-service.next.yaml \
-              -f ./kubernetes/traefik-service-mirror.yaml
+kubectl apply -f ./manifests/ingresscrd-prodtest.yaml \
+              -f ./manifests/register-service.latest.yaml \
+              -f ./manifests/register-service.next.yaml \
+              -f ./manifests/traefik-service-mirror.yaml
 
 # check if everything is up and running
 kubectl get all

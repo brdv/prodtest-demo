@@ -1,1 +1,1 @@
-docker build -t brdv/register-service:vnext ./src/RegisterService
+docker build -t brdv/register-service:vnext ./src/Services/Order.API

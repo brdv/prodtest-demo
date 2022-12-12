@@ -1,1 +1,1 @@
-docker build -t brdv/register-service:latest ./src/RegisterService
+docker build -t brdv/register-service:latest ./src/Services/Order.API

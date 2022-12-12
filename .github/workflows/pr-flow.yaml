@@ -9,6 +9,10 @@ on:
     branches:
       - main
       - 'sprint/**'
+  workflow_run:
+    workflows: []
+    types:
+      - completed
 
 jobs:
   sonar:
