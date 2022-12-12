@@ -1,6 +1,6 @@
 {
   "stryker-config": {
-    "solution": "../../../ProdtestDemo.sln",
+    "solution": "../../ProdtestDemo.sln",
     "project": "Domain.Common.csproj"
   }
 }
