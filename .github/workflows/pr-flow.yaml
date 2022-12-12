@@ -10,7 +10,7 @@ on:
       - main
       - 'sprint/**'
   workflow_run:
-    workflows: []
+    workflows: [OrderService, Domain Common]
     types:
       - completed
 
