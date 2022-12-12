@@ -1,6 +1,6 @@
-using Order.API.Models;
-namespace Order.API.Test.Unit;
+using Domain.Common.Models;
 
+namespace Domain.Common.Tests.Unit;
 
 [TestClass]
 public class OrderModelTests

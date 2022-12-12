@@ -1,5 +1,4 @@
-namespace Order.API.Contracts;
-
+namespace Domain.Common.Contracts;
 
 public record MenuItemResponse(
     string Name,

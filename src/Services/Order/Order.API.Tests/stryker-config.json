@@ -1,0 +1,6 @@
+{
+  "stryker-config": {
+    "solution": "../../../ProdtestDemo.sln",
+    "project": "Order.API.csproj"
+  }
+}

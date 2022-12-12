@@ -1,4 +1,4 @@
-namespace Order.API.Models;
+namespace Domain.Common.Models;
 
 public class OrderModel
 {
