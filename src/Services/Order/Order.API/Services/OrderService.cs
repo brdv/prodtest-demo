@@ -1,5 +1,7 @@
 using Domain.Common.Models;
 using Domain.Common.Contracts;
+using System.Text.Json;
+using Domain.Common.Services;
 
 namespace Order.API.Services;
 
@@ -25,7 +27,16 @@ public class OrderService : IOrderService
             menuItems
         );
 
+        PublishNewOrder(newOrder);
+
         return newOrder;
+    }
+
+    private void PublishNewOrder(OrderModel order)
+    {
+        var serializedOrder = JsonSerializer.Serialize(order);
+
+        RabbitMQService.PublishEvent("localhost", serializedOrder, "dl-exchange");
     }
 
     public List<MenuItemResponse> GetMenuItems()
