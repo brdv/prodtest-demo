@@ -1,46 +1,30 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Domain.Common.Exceptions;
-using Domain.Common.Models;
+﻿using Domain.Common.Exceptions;
 using Kitchen.Services;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-using System.Text;
-using System.Text.Json;
+using Microsoft.Extensions.DependencyInjection;
 
-var versionSetting = Environment.GetEnvironmentVariable("DL_TAG_VERSION");
-if (versionSetting == null)
+namespace Kitchen;
+class Program
 {
-    throw new EnvironmentVariableException("The environment variable 'DL_TAG_VERSION' was not set.'");
-}
-
-
-var kitchen = new KitchenService();
-
-var factory = new ConnectionFactory() { HostName = "localhost" };
-using (var connection = factory.CreateConnection())
-using (var channel = connection.CreateModel())
-{
-    channel.ExchangeDeclare("dl-exchange", ExchangeType.Fanout);
-
-    var queueName = channel.QueueDeclare().QueueName;
-
-    channel.QueueBind(queue: queueName, exchange: "dl-exchange", routingKey: "");
-
-    var consumer = new EventingBasicConsumer(channel);
-
-    consumer.Received += (model, ea) =>
+    static void Main(string[] args)
     {
-        var body = ea.Body.ToArray();
-        var decodedBody = Encoding.UTF8.GetString(body);
-        var order = JsonSerializer.Deserialize<OrderModel>(decodedBody);
-        if (order != null) kitchen.HandleOrder(order, versionSetting);
-        else Console.WriteLine("Something went wrong. Order is empty");
-    };
+        var environment = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+        var versionSetting = Environment.GetEnvironmentVariable("DL_TAG_VERSION");
 
-    channel.BasicConsume(queue: queueName,
-                         autoAck: true,
-                         consumer: consumer);
+        if (String.IsNullOrEmpty(environment)) environment = "DEVELOPMENT";
+        if (versionSetting == null) throw new EnvironmentVariableException("The environment variable 'DL_TAG_VERSION' was not set.'");
 
-    Console.WriteLine("Press [enter] to exit.");
-    Console.ReadLine();
+        var RMQHost = environment == "DEVELOPMENT" ? "localhost" : Environment.GetEnvironmentVariable("RMQ_HOST");
+        if (String.IsNullOrEmpty(RMQHost)) throw new EnvironmentVariableException("The environment variable 'RMQ_HOST' was not set.");
+
+        Console.WriteLine($"Rabbit Host: {RMQHost}; Environment: {environment}");
+
+        var builder = new ServiceCollection()
+            .AddScoped<IKitchenService, KitchenService>()
+            .BuildServiceProvider();
+
+        var app = new KitchenWorker(versionSetting, RMQHost, builder.GetRequiredService<IKitchenService>());
+
+        // Start listening to queue
+        app.Run();
+    }
 }

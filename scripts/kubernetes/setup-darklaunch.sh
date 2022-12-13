@@ -9,7 +9,11 @@ echo "\nAdded and applied traefik helm: https://artifacthub.io/packages/helm/tra
 kubectl apply -f ./manifests/ingresscrd-prodtest.yaml \
               -f ./manifests/register-service.latest.yaml \
               -f ./manifests/register-service.next.yaml \
-              -f ./manifests/traefik-service-mirror.yaml
+              -f ./manifests/kitchen-service.latest.yaml \
+              -f ./manifests/traefik-service-mirror.yaml \
+              -f ./manifests/rabbitmq-cluster.yaml
+
+
 
 # check if everything is up and running
 kubectl get all

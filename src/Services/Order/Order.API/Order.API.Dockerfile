@@ -6,5 +6,7 @@ RUN dotnet publish ./Services/Order/Order.API/Order.API.csproj -o /app/published
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine as runtime
 WORKDIR /app
+ARG RMQ_HOST
+ENV RMQ_HOST=${RMQ_HOST}
 COPY --from=build /app/published-app /app
 ENTRYPOINT [ "dotnet", "/app/Order.API.dll" ]

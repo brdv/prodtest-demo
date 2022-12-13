@@ -2,6 +2,7 @@ using Domain.Common.Models;
 using Domain.Common.Contracts;
 using System.Text.Json;
 using Domain.Common.Services;
+using Domain.Common.Exceptions;
 
 namespace Order.API.Services;
 
@@ -36,7 +37,17 @@ public class OrderService : IOrderService
     {
         var serializedOrder = JsonSerializer.Serialize(order);
 
-        RabbitMQService.PublishEvent("localhost", serializedOrder, "dl-exchange");
+        var rmqHost = Environment.GetEnvironmentVariable("RMQ_HOST");
+        var env = Environment.GetEnvironmentVariable("ENVIRONMENT");
+
+        if (env == "DEVELOPMENT")
+        {
+            rmqHost = "localhost";
+        }
+
+        if (String.IsNullOrEmpty(rmqHost)) throw new EnvironmentVariableException("Doe het nou pls");
+
+        RabbitMQService.PublishEvent(rmqHost, serializedOrder, "dl-exchange");
     }
 
     public List<MenuItemResponse> GetMenuItems()
