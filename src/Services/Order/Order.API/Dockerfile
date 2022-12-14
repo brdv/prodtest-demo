@@ -6,7 +6,8 @@ RUN dotnet publish -o /app/published-app
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine as runtime
 WORKDIR /app
-
+ARG DL_TAG_VERSION
+ARG DOTNET_ENVIRONMENT
 ARG RMQ_HOST
 ENV DL_TAG_VERSION=${DL_TAG_VERSION}
 ENV DOTNET_ENVIRONMENT=${DOTNET_ENVIRONMENT}

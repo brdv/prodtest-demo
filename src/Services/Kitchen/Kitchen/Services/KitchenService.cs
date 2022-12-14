@@ -12,7 +12,7 @@ public record HandledOrder(
 
 public class KitchenService : IKitchenService
 {
-    private int _speed = 7;
+    private int _speed = 9;
 
     public void HandleOrder(OrderModel order, string tag)
     {

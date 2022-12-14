@@ -38,16 +38,18 @@ public class OrderService : IOrderService
         var serializedOrder = JsonSerializer.Serialize(order);
 
         var rmqHost = Environment.GetEnvironmentVariable("RMQ_HOST");
-        var env = Environment.GetEnvironmentVariable("ENVIRONMENT");
+        var env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
+        var versionSetting = Environment.GetEnvironmentVariable("DL_TAG_VERSION");
+        if (versionSetting == null) throw new EnvironmentVariableException("The environment variable 'DL_TAG_VERSION' was not set.");
 
-        if (env == "DEVELOPMENT")
-        {
-            rmqHost = "localhost";
-        }
+        if (env == "DEVELOPMENT") rmqHost = "localhost";
 
-        if (String.IsNullOrEmpty(rmqHost)) throw new EnvironmentVariableException("Doe het nou pls");
+        if (String.IsNullOrEmpty(rmqHost)) throw new EnvironmentVariableException("The environment variable 'RMQ_HOST' was not set.");
 
-        RabbitMQService.PublishEvent(rmqHost, serializedOrder, "dl-exchange");
+        string exchange = "dl-exchange";
+        if (versionSetting != "Vcurrent") exchange = $"exhange-{versionSetting}";
+
+        RabbitMQService.PublishEvent(rmqHost, serializedOrder, exchange);
     }
 
     public List<MenuItemResponse> GetMenuItems()
