@@ -7,9 +7,9 @@ metadata:
 
 spec:
   mirroring:
-    name: register-service-latest
+    name: order-service-latest
     port: 80
     mirrors:
-      - name: register-service-next
+      - name: order-service-next
         port: 80
         percent: 100

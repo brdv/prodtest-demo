@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: register-service-latest
+  name: order-service-latest
   labels:
-    app: register-service-latest
+    app: order-service-latest
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: register-service-latest
+      app: order-service-latest
   template:
     metadata:
       labels:
-        app: register-service-latest
+        app: order-service-latest
     # Specifies a pod with one container
     spec:
       containers:
-        - name: register-service-latest
+        - name: order-service-latest
           image: order-api:latest
           imagePullPolicy: Never # > This option is set to never to use local images.
           ports:
@@ -26,7 +26,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: register-service-latest
+  name: order-service-latest
 
 spec:
   ports:
@@ -35,4 +35,4 @@ spec:
       targetPort: web
 
   selector:
-    app: register-service-latest
+    app: order-service-latest

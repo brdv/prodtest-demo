@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kitchen-service-next
+  labels:
+    app: kitchen-service-next
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kitchen-service-next
+  template:
+    metadata:
+      labels:
+        app: kitchen-service-next
+    # Specifies a pod with one container
+    spec:
+      containers:
+        - name: kitchen-service-next
+          image: kitchen-service:vnext
+          imagePullPolicy: Never # > This option is set to never to use local images.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kitchen-service-next
+
+spec:
+  selector:
+    app: kitchen-service-next
