@@ -1,6 +1,7 @@
 {
   "stryker-config": {
     "solution": "../../../ProdtestDemo.sln",
-    "project": "Order.API.csproj"
+    "project": "Order.API.csproj",
+    "reporters": ["progress", "html", "cleartext"]
   }
 }

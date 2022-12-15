@@ -35,6 +35,11 @@ public class OrderService : IOrderService
         return newOrder;
     }
 
+    public List<MenuItemResponse> GetMenuItems()
+    {
+        return _items.Select(i => i.Value.ToResponse()).ToList();
+    }
+
     private void PublishNewOrder(OrderModel order)
     {
         var serializedOrder = JsonSerializer.Serialize(order);
@@ -47,8 +52,15 @@ public class OrderService : IOrderService
             throw new EnvironmentVariableException("The environment variable 'DL_TAG_VERSION' was not set.");
         }
 
+        if (string.IsNullOrEmpty(env))
+        {
+            throw new EnvironmentVariableException("The environment variable 'DOTNET_ENVIRONMENT' was not set.");
+        }
+
         if (env == "DEVELOPMENT")
+        {
             rmqHost = "localhost";
+        }
 
         if (string.IsNullOrEmpty(rmqHost))
         {
@@ -61,15 +73,6 @@ public class OrderService : IOrderService
             exchange = $"exchange-{versionSetting}";
         }
 
-        // TODO: check je coding guidelines: typing var/string
-        // String.IsNullOrEmpty > string.xxx
-        // Uitzoeken of er een andere style enforcer is.
-
         _rmqService.PublishEvent(rmqHost, serializedOrder, exchange);
-    }
-
-    public List<MenuItemResponse> GetMenuItems()
-    {
-        return _items.Select(i => i.Value.ToResponse()).ToList();
     }
 }
