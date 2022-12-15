@@ -1,4 +1,6 @@
-namespace Order.API.Models;
+﻿using Domain.Common.Contracts;
+
+namespace Domain.Common.Models;
 
 public class MenuItem
 {
@@ -17,5 +19,14 @@ public class MenuItem
         Name = name;
         PreparationTime = preparationTime;
         Price = price;
+    }
+
+    public MenuItemResponse ToResponse()
+    {
+        return new MenuItemResponse(
+            Name,
+            PreparationTime,
+            Price
+        );
     }
 }

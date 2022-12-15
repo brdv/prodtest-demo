@@ -1,1 +1,3 @@
-docker build -t brdv/register-service:vnext ./src/RegisterService
+cd ./src
+docker build -t order-api:vnext -f ./Services/Order/Order.API/Order.API.Dockerfile . --build-arg DOTNET_ENVIRONMENT="PRODUCTION" --build-arg RMQ_HOST="dl-rabbitmq" --build-arg DL_TAG_VERSION="Vnext"
+docker build -t kitchen-service:vnext -f ./Services/Kitchen/Kitchen/Dockerfile . --build-arg DOTNET_ENVIRONMENT="PRODUCTION" --build-arg RMQ_HOST="dl-rabbitmq" --build-arg DL_TAG_VERSION="Vnext"

@@ -1,11 +1,12 @@
+﻿using Domain.Common.Contracts;
+using Domain.Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Order.API.Services;
 using Order.API.Controllers;
-using Order.API.Contracts;
-using Order.API.Models;
+using Order.API.Services;
+using Order.API.Tests.TestData;
 
-namespace Order.API.Test.Unit;
+namespace Order.API.Tests.Unit;
 
 [TestClass]
 public class OrderControllerTests
@@ -13,10 +14,15 @@ public class OrderControllerTests
     [TestMethod]
     public void Get_OrdersMenuItems_Returns_ListOfMenuItems()
     {
-        Mock<IKitchenService> mock = new Mock<IKitchenService>(MockBehavior.Strict);
+        var mock = new Mock<IOrderService>(MockBehavior.Strict);
 
-        IKitchenService mockService = mock.Object;
-        OrdersController controller = new OrdersController(mockService);
+        var testMenuItems = OrderTestData.GetTestListMenuItems();
+
+        mock.Setup(service => service.GetMenuItems())
+            .Returns(testMenuItems.Select(i => i.ToResponse()).ToList());
+
+        var mockService = mock.Object;
+        var controller = new OrdersController(mockService);
 
         var result = controller.GetMenuItems();
 
@@ -34,23 +40,18 @@ public class OrderControllerTests
     }
 
     [TestMethod]
-    public void Post_NewOrder_Returns_OrderHandled()
+    public void Post_AddOrder_Returns_OrderModel()
     {
-        Mock<IKitchenService> mock = new Mock<IKitchenService>(MockBehavior.Strict);
+        var mock = new Mock<IOrderService>(MockBehavior.Strict);
 
-        var testOrderHandeled = GetTestOrderHandled();
+        var testOrderModel = OrderTestData.GetTestOrderModel();
 
-        mock.Setup(service => service.handleOrder(It.IsAny<OrderModel>())).Returns(testOrderHandeled);
-        IKitchenService mockService = mock.Object;
+        mock.Setup(service => service.AddOrder(It.IsAny<CreateOrderRequest>())).Returns(testOrderModel);
+        var mockService = mock.Object;
 
-        OrdersController controller = new OrdersController(mockService);
+        var controller = new OrdersController(mockService);
 
-        var newOrder = new CreateOrderRequest(
-            new List<string>(){
-                "burger",
-                "fries"
-            }
-        );
+        var newOrder = OrderTestData.GetTestOrderCreate();
 
         var result = controller.PostOrder(newOrder);
 
@@ -58,28 +59,8 @@ public class OrderControllerTests
 
         Assert.IsNotNull(okObjectResult);
 
-        var resultValue = okObjectResult.Value as OrderHandled;
+        var resultValue = okObjectResult.Value as OrderModel;
 
         Assert.IsNotNull(resultValue);
-
-        Assert.AreEqual(resultValue.totalPrepTime, testOrderHandeled.totalPrepTime);
-        Assert.AreEqual(resultValue.actualPrepTime, testOrderHandeled.actualPrepTime);
-    }
-
-    private OrderHandled GetTestOrderHandled()
-    {
-        return new OrderHandled(
-            Guid.NewGuid(),
-            7,
-            5
-        );
-    }
-
-    private List<MenuItem> GetTestListMenuItems()
-    {
-        return new List<MenuItem>(){
-            new MenuItem(Guid.Parse("00000000-0000-0000-0000-000000000000"), "Burger", 5, 3.5),
-            new MenuItem(Guid.Parse("00000000-0000-0000-0000-000000000000"), "Fries", 2, 2.5),
-        };
     }
 }

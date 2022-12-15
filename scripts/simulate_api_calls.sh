@@ -9,7 +9,7 @@ help() {
 }
 
 call() {
-    curl --request POST -H "Content-Type:application/json" http://localhost/orders --data "{\"ItemIds\": [\"burger\", \"fries\"]}" --silent 
+    curl --request POST -H "Content-Type:application/json" http://localhost/orders --data "{\"MenuItems\": [\"burger\", \"fries\"]}" --silent 
 }
 
 NO_CALLS=500

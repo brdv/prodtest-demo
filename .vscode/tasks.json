@@ -32,7 +32,7 @@
       "type": "process",
       "args": [
         "test",
-        "${workspaceFolder}/src/Services/Order/Order.API.Tests/Order.API.Tests.csproj",
+        "${workspaceFolder}/src/",
         "--collect: \"XPlat Code Coverage\""
       ],
       "problemMatcher": "$msCompile",
@@ -46,10 +46,7 @@
       "dependsOn": [],
       "command": "rm",
       "type": "process",
-      "args": [
-        "-rf",
-        "${workspaceFolder}/src/Services/Order/Order.Api.Tests/TestResults"
-      ],
+      "args": ["-rf", "${workspaceFolder}/src/**/TestResults"],
       "problemMatcher": "$msCompile",
       "group": {
         "kind": "test",

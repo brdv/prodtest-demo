@@ -1,0 +1,14 @@
+name: Domain Common
+
+on:
+  pull_request:
+    branches:
+      - main
+      - 'sprint/**'
+
+jobs:
+  run-checks:
+    uses: brdv/prodtest-demo/.github/workflows/service-check.yaml@fix/split-order-kitchen-service
+    with:
+      project_dir: 'src/Common/Domain.Common'
+      test_project: 'src/Common/Domain.Common.Tests/'

@@ -1,0 +1,41 @@
+on:
+  workflow_call:
+    inputs:
+      project_dir:
+        required: true
+        type: string
+      test_project:
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ['6.x.x']
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+      - name: Install dependencies
+        run: dotnet restore ${{ inputs.project_dir }}
+      - name: Build
+        run: dotnet build ${{ inputs.project_dir }} --configuration Release --no-restore
+      - name: Test
+        run: |
+          dotnet test ${{ inputs.project_dir }} --no-restore --verbosity normal
+  mutation-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: tom171296/run-stryker-net@main
+        with:
+          testProject: ${{ inputs.test_project }}
+          breakAt: '70'
+      - uses: actions/upload-artifact@v3
+        with:
+          name: html-report
+          path: ${{github.workspace}}/${{ inputs.test_project }}StrykerOutput/**/**/*.html

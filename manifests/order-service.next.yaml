@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: register-service-next
+  name: order-service-next
   labels:
-    app: register-service-next
+    app: order-service-next
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: register-service-next
+      app: order-service-next
   template:
     metadata:
       labels:
-        app: register-service-next
+        app: order-service-next
     # Specifies a pod with one container
     spec:
       containers:
-        - name: register-service-next
-          image: brdv/register-service:vnext
+        - name: order-service-next
+          image: order-api:vnext
           imagePullPolicy: Never # > This option is set to never to use local images.
           ports:
             - name: web
@@ -26,7 +26,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: register-service-next
+  name: order-service-next
 
 spec:
   ports:
@@ -35,4 +35,4 @@ spec:
       targetPort: web
 
   selector:
-    app: register-service-next
+    app: order-service-next
