@@ -6,6 +6,7 @@ namespace Kitchen;
 
 internal class Program
 {
+    protected Program() { }
     private static void Main(string[] args)
     {
         var environment = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
