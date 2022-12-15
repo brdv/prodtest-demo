@@ -63,7 +63,28 @@ Follow the guide below to setup and start the project.
 
     \* you can see if docker-desktop is selecten in the output of command 1.
 
-3.  Last setup step, apply all resources:
+3.  Build all docker images (locally)
+
+    Run the build scripts
+
+    ```bash
+    # from the projects root folder:
+    sh ./scripts/docker/latest.build.sh
+    sh ./scripts/docker/next.build.sh
+    ```
+
+4.  Apply infrastructure resources:
+
+    Run setup-infra script
+
+    ```bash
+    # from the projects root folder:
+    sh ./scripts/kubernetes/setup-infra.sh
+    ```
+
+    **NOTE**: Because it takes some time for the infrastructure to be completed; the script waits 30 secs.
+
+5.  Apply other kubernetes resourcess
 
     ```bash
     # from the projects root folder:
@@ -72,7 +93,7 @@ Follow the guide below to setup and start the project.
 
     This will apply all resources to the cluster. You will see all resources in the console. (Run `kubectl get all` if they do not show up.)
 
-4.  Go to http://localhost/api/health, you should see a json object as follows:
+6.  Go to http://localhost/api/health, you should see a json object as follows:
 
     ```json
     {
@@ -80,7 +101,7 @@ Follow the guide below to setup and start the project.
     }
     ```
 
-5.  To see the traefik dashboard, run the following command:
+7.  To see the traefik dashboard, run the following command:
 
     ```bash
     kubectl port-forward $(kubectl get pods --selector "app.kubernetes.io/name=traefik" --output=name) 9000:9000
@@ -119,3 +140,12 @@ There are a few other commands that can be helpfull during testing or developmen
    ```
 
    \* _In case of an error like 'jq command does not exist' [install jq](https://stedolan.github.io/jq/download/)_
+
+4. Check KitchenService logs
+
+   Make sure you posted at least one order or ran the simulation script.
+
+   ```bash
+   kubectl logs deployments/kitchen-service-latest
+   kubectl logs deployments/kitchen-service-next
+   ```
