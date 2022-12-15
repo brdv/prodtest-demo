@@ -1,6 +1,5 @@
+﻿using Microsoft.AspNetCore.Mvc;
 using Order.API.Controllers;
-using Microsoft.AspNetCore.Mvc;
-
 
 namespace Order.API.Test.Unit;
 

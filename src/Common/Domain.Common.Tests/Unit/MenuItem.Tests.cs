@@ -1,5 +1,5 @@
+﻿using Domain.Common.Contracts;
 using Domain.Common.Models;
-using Domain.Common.Contracts;
 
 namespace Domain.Common.Tests.Unit;
 
@@ -13,7 +13,7 @@ public class MenuItemTests
 
         Assert.IsInstanceOfType(result, typeof(MenuItem));
         Assert.IsNotNull(result.Id);
-        Assert.IsFalse(String.IsNullOrEmpty(result.Name));
+        Assert.IsFalse(string.IsNullOrEmpty(result.Name));
     }
 
     [TestMethod]

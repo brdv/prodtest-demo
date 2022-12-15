@@ -1,4 +1,4 @@
-using Domain.Common.Contracts;
+﻿using Domain.Common.Contracts;
 using Domain.Common.Models;
 
 namespace Order.API.Services;

@@ -1,12 +1,11 @@
+﻿using System.Text;
 using RabbitMQ.Client;
-using System.Text;
-
 
 namespace Domain.Common.Services;
 
-public class RabbitMQService
+public class RabbitMQService : IRabbitMQService
 {
-    public static void PublishEvent(string hostname, string message, string queue)
+    public void PublishEvent(string hostname, string message, string queue)
     {
         var factory = new ConnectionFactory() { HostName = hostname };
         using (var connection = factory.CreateConnection())

@@ -1,6 +1,4 @@
-using Domain.Common.Models;
-using Domain.Common.Contracts;
-using Order.API.Services;
+﻿using Order.API.Services;
 using Order.API.Tests.TestData;
 
 namespace Order.API.Tests.Unit;
@@ -8,7 +6,7 @@ namespace Order.API.Tests.Unit;
 [TestClass]
 public class OrderServiceTests
 {
-    private IOrderService _service = new OrderService();
+    private readonly IOrderService _service = new OrderService();
     [TestMethod]
     public void GetMenuItems_Returns_Default_List()
     {
@@ -16,9 +14,9 @@ public class OrderServiceTests
 
         Assert.IsNotNull(result);
         Assert.AreNotEqual(0, result.Count);
-        foreach (MenuItemResponse item in result)
+        foreach (var item in result)
         {
-            Assert.IsFalse(String.IsNullOrEmpty(item.Name));
+            Assert.IsFalse(string.IsNullOrEmpty(item.Name));
             Assert.IsNotNull(item.PreparationTime);
             Assert.IsNotNull(item.Price);
         }

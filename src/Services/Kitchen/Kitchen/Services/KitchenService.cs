@@ -1,4 +1,4 @@
-using Domain.Common.Models;
+﻿using Domain.Common.Models;
 
 namespace Kitchen.Services;
 
@@ -12,12 +12,12 @@ public record HandledOrder(
 
 public class KitchenService : IKitchenService
 {
-    private int _speed = 9;
+    private readonly int _speed = 9;
 
     public void HandleOrder(OrderModel order, string tag)
     {
         double prepXSpeed = order.TotalPrepTime * 10 / _speed;
-        int actualPrepTime = (int)(Math.Round(prepXSpeed, 0));
+        var actualPrepTime = (int)(Math.Round(prepXSpeed, 0));
         // Console.WriteLine($"Order with id {order.Id} handled in {actualPrepTime}");
         var handled = new HandledOrder(Guid.NewGuid(), order.Id, order.TotalPrepTime, actualPrepTime, tag);
 

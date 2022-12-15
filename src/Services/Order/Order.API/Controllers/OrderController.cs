@@ -1,5 +1,5 @@
+﻿using Domain.Common.Contracts;
 using Microsoft.AspNetCore.Mvc;
-using Domain.Common.Contracts;
 using Order.API.Services;
 
 namespace Order.API.Controllers;
@@ -16,16 +16,16 @@ public class OrdersController : ApiController
     [HttpGet("items")]
     public IActionResult GetMenuItems()
     {
-        var items = _orderService.GetMenuItems();
+        var menuItems = _orderService.GetMenuItems();
 
-        return Ok(items);
+        return Ok(menuItems);
     }
 
     [HttpPost("")]
     public IActionResult PostOrder(CreateOrderRequest orderCreate)
     {
-        var order = _orderService.AddOrder(orderCreate);
+        var createdOrder = _orderService.AddOrder(orderCreate);
 
-        return Ok(order);
+        return Ok(createdOrder);
     }
 }

@@ -1,4 +1,4 @@
-using Domain.Common.Models;
+﻿using Domain.Common.Models;
 
 namespace Kitchen.Services;
 
