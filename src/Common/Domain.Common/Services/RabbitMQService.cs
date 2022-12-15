@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿// Stryker disable all : Only RabbitMQ Specific implementation
+using System.Text;
 using RabbitMQ.Client;
 
 namespace Domain.Common.Services;

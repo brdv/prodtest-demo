@@ -1,6 +1,7 @@
 {
   "stryker-config": {
     "solution": "../../ProdtestDemo.sln",
-    "project": "Domain.Common.csproj"
+    "project": "Domain.Common.csproj",
+    "reporters": ["progress", "html", "cleartext"]
   }
 }

@@ -12,7 +12,6 @@ public class OrderServiceTests
     private readonly string _tag = "Vtest";
     private readonly string _rmqHost = "testhost";
 
-
     [TestInitialize]
     public void TestInit()
     {
