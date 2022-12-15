@@ -1,12 +1,11 @@
-﻿namespace Domain.Common.Exceptions;
+﻿using System.Runtime.Serialization;
+
+namespace Domain.Common.Exceptions;
 
 [Serializable]
 public class EnvironmentVariableException : Exception
 {
-    public EnvironmentVariableException() { }
+    protected EnvironmentVariableException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
     public EnvironmentVariableException(string message) : base(message) { }
-
-    public EnvironmentVariableException(string message, Exception innerException)
-    : base(message, innerException) { }
 }
