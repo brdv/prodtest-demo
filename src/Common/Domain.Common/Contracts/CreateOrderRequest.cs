@@ -1,4 +1,4 @@
-namespace Domain.Common.Contracts;
+﻿namespace Domain.Common.Contracts;
 
 public record CreateOrderRequest(
     List<string> MenuItems

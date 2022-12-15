@@ -1,4 +1,4 @@
-namespace Domain.Common.Models;
+﻿namespace Domain.Common.Models;
 
 public class OrderModel
 {
@@ -19,7 +19,7 @@ public class OrderModel
 
     private static int GetTotalPrepTimeForOrder(List<MenuItem> items)
     {
-        int totalPrepTime = 0;
+        var totalPrepTime = 0;
         items.ForEach(i => totalPrepTime += i.PreparationTime);
 
         return totalPrepTime;

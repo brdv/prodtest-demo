@@ -1,4 +1,4 @@
-namespace Kitchen.Tests;
+﻿namespace Kitchen.Tests;
 
 [TestClass]
 public class UnitTest1

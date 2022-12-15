@@ -1,7 +1,9 @@
+﻿using Domain.Common.Services;
 using Order.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderService, OrderService>()
+                .AddScoped<IRabbitMQService, RabbitMQService>();
 builder.Services.AddControllers();
 
 var app = builder.Build();

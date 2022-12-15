@@ -1,8 +1,8 @@
-using Domain.Common.Models;
+﻿using System.Text.Json;
 using Domain.Common.Contracts;
-using System.Text.Json;
-using Domain.Common.Services;
 using Domain.Common.Exceptions;
+using Domain.Common.Models;
+using Domain.Common.Services;
 
 namespace Order.API.Services;
 
@@ -13,17 +13,19 @@ public class OrderService : IOrderService
         {"fries", new MenuItem(Guid.NewGuid(), "Fries", 2, 1.50)},
         {"soda", new MenuItem(Guid.NewGuid(), "Soda", 1, 1.50)}
     };
+
+    private readonly IRabbitMQService _rmqService;
+
+    public OrderService(IRabbitMQService service)
+    {
+        _rmqService = service;
+    }
+
     public OrderModel AddOrder(CreateOrderRequest order)
     {
-        // TODO: prettify
-        List<MenuItem> menuItems = new List<MenuItem>();
+        var menuItems = order.MenuItems.Select(item => _items[item]).ToList();
 
-        foreach (string item in order.MenuItems)
-        {
-            menuItems.Add(_items[item]);
-        }
-
-        OrderModel newOrder = new OrderModel(
+        var newOrder = new OrderModel(
             Guid.NewGuid(),
             menuItems
         );
@@ -40,16 +42,30 @@ public class OrderService : IOrderService
         var rmqHost = Environment.GetEnvironmentVariable("RMQ_HOST");
         var env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
         var versionSetting = Environment.GetEnvironmentVariable("DL_TAG_VERSION");
-        if (versionSetting == null) throw new EnvironmentVariableException("The environment variable 'DL_TAG_VERSION' was not set.");
+        if (versionSetting == null)
+        {
+            throw new EnvironmentVariableException("The environment variable 'DL_TAG_VERSION' was not set.");
+        }
 
-        if (env == "DEVELOPMENT") rmqHost = "localhost";
+        if (env == "DEVELOPMENT")
+            rmqHost = "localhost";
 
-        if (String.IsNullOrEmpty(rmqHost)) throw new EnvironmentVariableException("The environment variable 'RMQ_HOST' was not set.");
+        if (string.IsNullOrEmpty(rmqHost))
+        {
+            throw new EnvironmentVariableException("The environment variable 'RMQ_HOST' was not set.");
+        }
 
-        string exchange = "dl-exchange";
-        if (versionSetting != "Vcurrent") exchange = $"exhange-{versionSetting}";
+        var exchange = "dl-exchange";
+        if (versionSetting != "Vcurrent")
+        {
+            exchange = $"exchange-{versionSetting}";
+        }
 
-        RabbitMQService.PublishEvent(rmqHost, serializedOrder, exchange);
+        // TODO: check je coding guidelines: typing var/string
+        // String.IsNullOrEmpty > string.xxx
+        // Uitzoeken of er een andere style enforcer is.
+
+        _rmqService.PublishEvent(rmqHost, serializedOrder, exchange);
     }
 
     public List<MenuItemResponse> GetMenuItems()

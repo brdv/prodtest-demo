@@ -1,4 +1,4 @@
-using Domain.Common.Contracts;
+﻿using Domain.Common.Contracts;
 
 namespace Domain.Common.Models;
 
@@ -29,5 +29,4 @@ public class MenuItem
             Price
         );
     }
-
 }

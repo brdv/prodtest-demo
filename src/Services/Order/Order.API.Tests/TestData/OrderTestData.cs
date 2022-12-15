@@ -1,5 +1,5 @@
+﻿using Domain.Common.Contracts;
 using Domain.Common.Models;
-using Domain.Common.Contracts;
 
 namespace Order.API.Tests.TestData;
 

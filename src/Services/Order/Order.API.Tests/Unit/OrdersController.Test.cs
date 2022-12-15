@@ -1,9 +1,9 @@
+﻿using Domain.Common.Contracts;
+using Domain.Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Order.API.Services;
 using Order.API.Controllers;
-using Domain.Common.Contracts;
-using Domain.Common.Models;
+using Order.API.Services;
 using Order.API.Tests.TestData;
 
 namespace Order.API.Tests.Unit;
@@ -14,15 +14,15 @@ public class OrderControllerTests
     [TestMethod]
     public void Get_OrdersMenuItems_Returns_ListOfMenuItems()
     {
-        Mock<IOrderService> mock = new Mock<IOrderService>(MockBehavior.Strict);
+        var mock = new Mock<IOrderService>(MockBehavior.Strict);
 
         var testMenuItems = OrderTestData.GetTestListMenuItems();
 
         mock.Setup(service => service.GetMenuItems())
             .Returns(testMenuItems.Select(i => i.ToResponse()).ToList());
 
-        IOrderService mockService = mock.Object;
-        OrdersController controller = new OrdersController(mockService);
+        var mockService = mock.Object;
+        var controller = new OrdersController(mockService);
 
         var result = controller.GetMenuItems();
 
@@ -42,14 +42,14 @@ public class OrderControllerTests
     [TestMethod]
     public void Post_AddOrder_Returns_OrderModel()
     {
-        Mock<IOrderService> mock = new Mock<IOrderService>(MockBehavior.Strict);
+        var mock = new Mock<IOrderService>(MockBehavior.Strict);
 
         var testOrderModel = OrderTestData.GetTestOrderModel();
 
         mock.Setup(service => service.AddOrder(It.IsAny<CreateOrderRequest>())).Returns(testOrderModel);
-        IOrderService mockService = mock.Object;
+        var mockService = mock.Object;
 
-        OrdersController controller = new OrdersController(mockService);
+        var controller = new OrdersController(mockService);
 
         var newOrder = OrderTestData.GetTestOrderCreate();
 
