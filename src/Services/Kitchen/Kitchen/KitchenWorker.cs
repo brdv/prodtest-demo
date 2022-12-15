@@ -54,11 +54,7 @@ internal class KitchenWorker
                                  consumer: consumer);
 
             Console.WriteLine("Press [enter] to exit.");
-            var line = "";
-            while ((line = Console.ReadLine()) != null) // loop has clear exit condition
-            {
-                Console.WriteLine(line);
-            }
+            while (true) { }
         }
     }
 }
