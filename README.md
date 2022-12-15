@@ -146,8 +146,7 @@ There are a few other commands that can be helpfull during testing or developmen
    Make sure you posted at least one order or ran the simulation script.
 
    ```bash
-   kubectl logs deployments/kitchen-service-latest
-   kubectl logs deployments/kitchen-service-next
+   sh ./scipts/kubernetes/get-kitchen-logs.sh
    ```
 
    If the setup went right, you should see a HandledOrder object with the same OrderId on both services. The Id is different and the handler as well (to demonstrate the dark launch).
