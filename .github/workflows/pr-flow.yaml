@@ -1,4 +1,4 @@
-name: SonarScanner
+name: Solution
 
 on:
   pull_request:
