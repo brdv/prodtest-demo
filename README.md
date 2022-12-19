@@ -170,3 +170,13 @@ There are a few other commands that can be helpfull during testing or developmen
    ```
 
    If the setup went right, you should see a HandledOrder object with the same OrderId on both services. The Id is different and the handler as well (to demonstrate the dark launch).
+
+4. Check RabbitMQ dashboard
+
+   You can access the RabbitMQ dashboard by port forewarding its instance.
+
+   ```bash
+   sh ./scripts/pfw-rabbitmq.sh
+   ```
+
+   Now open the browser at http://localhost:15672 and log in with the credentials in your console.
