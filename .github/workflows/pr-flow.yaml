@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: dotnet restore ./src
       - name: Format
-        run: dotnet format --version && echo "\n" && dotnet format style ./src --verbosity n --verify-no-changes --severity warning
+        run: dotnet format --version && echo "\n" && dotnet format style ./src --verbosity n --verify-no-changes --severity warn
   sonar:
     name: Sonar
     runs-on: ubuntu-latest
