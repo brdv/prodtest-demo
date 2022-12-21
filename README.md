@@ -20,7 +20,8 @@ The contents of this Readme are:
 
 - [Prerequisites](#prerequisites)
 - [Setup](#setup)
-- [Other commands](#other-commands)
+- [Checking the demo project](#checking-the-demo-project)
+- [Other commands](#useful-scripts)
 
 ## Prerequisites
 
@@ -45,7 +46,7 @@ helm version --short
 
 If it outputs a version number, the installation has succeeded.
 
-## Setup
+## Setup kubernetes cluster
 
 Follow the guide below to setup and start the project.
 
@@ -93,23 +94,51 @@ Follow the guide below to setup and start the project.
 
     This will apply all resources to the cluster. You will see all resources in the console. (Run `kubectl get all` if they do not show up.)
 
-6.  Go to http://localhost/api/health, you should see a json object as follows:
+Nice job, you've successfully set up all resources for this demo project. You can now proceed to the next section, checks.
 
-    ```json
-    {
-      "health": "ok"
-    }
-    ```
+## Checking the demo project.
 
-7.  To see the traefik dashboard, run the following command:
+1. First of all you can check if the API is up and running by going to "http://localhost/api/health". You should then see a JSON object as follows:
 
-    ```bash
-    kubectl port-forward $(kubectl get pods --selector "app.kubernetes.io/name=traefik" --output=name) 9000:9000
-    ```
+   ```json
+   {
+     "health": "ok"
+   }
+   ```
 
-    Leave the shell open and go to http://localhost:9000/dashboard/
+2. To see the Traefik (proxy) dashboard, run the following command:
 
-## Other commands
+   ```bash
+   kubectl port-forward $(kubectl get pods --selector "app.kubernetes.io/name=traefik" --output=name) 9000:9000
+   ```
+
+   Leave the shell open and go to http://localhost:9000/dashboard/
+
+3. You can check the Prometheus metrics by running the following command:
+
+   ```bash
+   kubectl port-forward $(kubectl get pods --selector "app.kubernetes.io/name=traefik" --output=name) 9000:9100
+   ```
+
+   Leave the shell open and go to http://localhost:9000/metrics/
+
+4. Next you can call the API a couple of times by using the simulate script:
+
+   ```bash
+   sh ./scripts/simulate_api_calls.sh -n 10
+   ```
+
+   \* the `-n 10` specifies the number of times to call the API (in this case, 10 times)
+
+   After running the script, you can check the responses of the API in `temp/request_output.json`. Thereby you can check the metrics endpoint in step `3`, however, currently this is a bit cryptic.
+
+5. Check the logs of the kitchen service by running the following script:
+
+   ```bash
+   sh ./scripts/kubernetes/get-kitchen-logs.sh
+   ```
+
+## Useful scripts
 
 There are a few other commands that can be helpfull during testing or development.
 
@@ -121,16 +150,7 @@ There are a few other commands that can be helpfull during testing or developmen
    sh ./scripts/kubernetes/cleanup.sh
    ```
 
-2. Deploy new docker images
-
-   If you want to deploy new versions of the docker images you can run any of the scripts in `./scripts/docker`
-   For example to deploy a new version of the latest image:
-
-   ```bash
-   sh ./scripts/docker/latest.deploy.sh
-   ```
-
-3. Simulate API requests
+2. Simulate API requests
 
    In order to simulate API requests, you can use the script `simulate_api_calls.sh`. This script will by default call the api 500 times and save the responses to `temp/request_output.json`.
    Use the script as follows:
@@ -141,12 +161,22 @@ There are a few other commands that can be helpfull during testing or developmen
 
    \* _In case of an error like 'jq command does not exist' [install jq](https://stedolan.github.io/jq/download/)_
 
-4. Check KitchenService logs
+3. Check KitchenService logs
 
    Make sure you posted at least one order or ran the simulation script.
 
    ```bash
-   sh ./scipts/kubernetes/get-kitchen-logs.sh
+   sh ./scripts/kubernetes/get-kitchen-logs.sh
    ```
 
    If the setup went right, you should see a HandledOrder object with the same OrderId on both services. The Id is different and the handler as well (to demonstrate the dark launch).
+
+4. Check RabbitMQ dashboard
+
+   You can access the RabbitMQ dashboard by port forewarding its instance.
+
+   ```bash
+   sh ./scripts/pfw-rabbitmq.sh
+   ```
+
+   Now open the browser at http://localhost:15672 and log in with the credentials in your console.

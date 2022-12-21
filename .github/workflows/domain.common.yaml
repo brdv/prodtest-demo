@@ -8,7 +8,7 @@ on:
 
 jobs:
   run-checks:
-    uses: brdv/prodtest-demo/.github/workflows/service-check.yaml@fix/split-order-kitchen-service
+    uses: brdv/prodtest-demo/.github/workflows/service-check.yaml@sprint/4
     with:
       project_dir: 'src/Common/Domain.Common'
       test_project: 'src/Common/Domain.Common.Tests/'
