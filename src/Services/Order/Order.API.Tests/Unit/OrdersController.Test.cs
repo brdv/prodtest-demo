@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Order.API.Controllers;
 using Order.API.Services;
-using Order.API.Tests.TestData;
+using Domain.Common.Generators;
 
 namespace Order.API.Tests.Unit;
 
@@ -16,7 +16,7 @@ public class OrderControllerTests
     {
         var mock = new Mock<IOrderService>(MockBehavior.Strict);
 
-        var testMenuItems = OrderTestData.GetTestListMenuItems();
+        var testMenuItems = TestDataGenerator.GetTestListMenuItems();
 
         mock.Setup(service => service.GetMenuItems())
             .Returns(testMenuItems.Select(i => i.ToResponse()).ToList());
@@ -44,14 +44,14 @@ public class OrderControllerTests
     {
         var mock = new Mock<IOrderService>(MockBehavior.Strict);
 
-        var testOrderModel = OrderTestData.GetTestOrderModel();
+        var testOrderModel = TestDataGenerator.GetTestOrderModel();
 
         mock.Setup(service => service.AddOrder(It.IsAny<CreateOrderRequest>())).Returns(testOrderModel);
         var mockService = mock.Object;
 
         var controller = new OrdersController(mockService);
 
-        var newOrder = OrderTestData.GetTestOrderCreate();
+        var newOrder = TestDataGenerator.GetTestOrderCreate();
 
         var result = controller.PostOrder(newOrder);
 
