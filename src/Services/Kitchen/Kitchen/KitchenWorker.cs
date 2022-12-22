@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using System.Text.Json;
-using Domain.Common.Exceptions;
 using Domain.Common.Models;
 using Kitchen.Services;
 using Microsoft.Extensions.Configuration;
