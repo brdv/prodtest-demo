@@ -1,6 +1,5 @@
 ﻿using System.Text.Json;
 using Domain.Common.Contracts;
-using Domain.Common.Exceptions;
 using Domain.Common.Models;
 using Domain.Common.Services;
 

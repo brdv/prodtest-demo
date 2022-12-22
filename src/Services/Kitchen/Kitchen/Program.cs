@@ -3,6 +3,8 @@ using Kitchen.DAL;
 using Kitchen.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using System.Collections;
 
 namespace Kitchen;
 
@@ -11,39 +13,35 @@ internal class Program
     protected Program() { }
     private static void Main(string[] args)
     {
-        var environment = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
-        var versionSetting = Environment.GetEnvironmentVariable("DL_TAG_VERSION");
+        var inEnv = Environment.GetEnvironmentVariable("DOTNET_ENV");
+        var env = inEnv != null ? inEnv : "DEV";
 
-        if (String.IsNullOrEmpty(environment))
+        var settingsFile = "appsettings.json";
+        if (env != "PRODUCTION")
         {
-            environment = "DEVELOPMENT";
+            settingsFile = $"appsettings.{env.ToLower()}.json";
         }
 
-        if (versionSetting == null)
-        {
-            throw new EnvironmentVariableException("The environment variable 'DL_TAG_VERSION' was not set.'");
-        }
+        var configBuilder = new ConfigurationBuilder()
+            .AddJsonFile(settingsFile);
 
-        var RMQHost = environment == "DEVELOPMENT" ? "localhost" : Environment.GetEnvironmentVariable("RMQ_HOST");
-        if (String.IsNullOrEmpty(RMQHost))
-        {
-            throw new EnvironmentVariableException("The environment variable 'RMQ_HOST' was not set.");
-        }
+        var config = configBuilder.Build();
 
-        Console.WriteLine($"Rabbit Host: {RMQHost}; Environment: {environment}");
+        Console.WriteLine($"Rabbit Host: {config["RMQ_HOST"]}; Version: {config["DL_INTERNAL_TAG"]}");
 
         var builder = new ServiceCollection()
             .AddScoped<IKitchenService, KitchenService>()
+            .AddSingleton<IConfiguration>(config)
             .AddDbContext<KitchenDbContext>(options =>
             {
-                options.UseSqlite("Data Source=sql.db");
+                options.UseSqlite($"Data Source={config["DL_INTERNAL_TAG"]}-sql.db");
             })
             .AddSingleton<IKitchenRepository, KitchenRepository>()
             .BuildServiceProvider();
 
         builder.GetRequiredService<KitchenDbContext>().Database.EnsureCreated();
 
-        var app = new KitchenWorker(versionSetting, RMQHost, builder.GetRequiredService<IKitchenService>());
+        var app = new KitchenWorker(builder.GetRequiredService<IKitchenService>(), builder.GetRequiredService<IConfiguration>());
 
         // Start listening to queue
         app.Run();

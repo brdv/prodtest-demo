@@ -1,7 +1,9 @@
 ﻿using System.Text;
 using System.Text.Json;
+using Domain.Common.Exceptions;
 using Domain.Common.Models;
 using Kitchen.Services;
+using Microsoft.Extensions.Configuration;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
@@ -13,10 +15,10 @@ internal class KitchenWorker
     private readonly string RMQHost;
     private readonly IKitchenService _service;
 
-    public KitchenWorker(string versionSetting, string rmqHost, IKitchenService service)
+    public KitchenWorker(IKitchenService service, IConfiguration config)
     {
-        this.versionSetting = versionSetting;
-        RMQHost = rmqHost;
+        versionSetting = config["DL_INTERNAL_TAG"];
+        RMQHost = config["RMQ_HOST"];
         _service = service;
     }
 
