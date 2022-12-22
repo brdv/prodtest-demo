@@ -15,10 +15,12 @@ public class OrderService : IOrderService
     };
 
     private readonly IRabbitMQService _rmqService;
+    private readonly IConfiguration _configuration;
 
-    public OrderService(IRabbitMQService service)
+    public OrderService(IRabbitMQService service, IConfiguration configuration)
     {
         _rmqService = service;
+        _configuration = configuration;
     }
 
     public OrderModel AddOrder(CreateOrderRequest order)
@@ -43,36 +45,8 @@ public class OrderService : IOrderService
     private void PublishNewOrder(OrderModel order)
     {
         var serializedOrder = JsonSerializer.Serialize(order);
+        var versionTag = _configuration["DL_INTERNAL_TAG"];
 
-        var rmqHost = Environment.GetEnvironmentVariable("RMQ_HOST");
-        var env = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
-        var versionSetting = Environment.GetEnvironmentVariable("DL_TAG_VERSION");
-        if (versionSetting == null)
-        {
-            throw new EnvironmentVariableException("The environment variable 'DL_TAG_VERSION' was not set.");
-        }
-
-        if (string.IsNullOrEmpty(env))
-        {
-            throw new EnvironmentVariableException("The environment variable 'DOTNET_ENVIRONMENT' was not set.");
-        }
-
-        if (env == "DEVELOPMENT")
-        {
-            rmqHost = "localhost";
-        }
-
-        if (string.IsNullOrEmpty(rmqHost))
-        {
-            throw new EnvironmentVariableException("The environment variable 'RMQ_HOST' was not set.");
-        }
-
-        var exchange = "dl-exchange";
-        if (versionSetting != "Vcurrent")
-        {
-            exchange = $"exchange-{versionSetting}";
-        }
-
-        _rmqService.PublishEvent(rmqHost, serializedOrder, exchange);
+        _rmqService.PublishEvent(_configuration["RMQ_HOST"], serializedOrder, $"dl-exchange-{versionTag}");
     }
 }
