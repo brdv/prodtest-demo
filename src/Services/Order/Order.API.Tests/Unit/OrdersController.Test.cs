@@ -1,10 +1,10 @@
 ﻿using Domain.Common.Contracts;
+using Domain.Common.Generators;
 using Domain.Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Order.API.Controllers;
 using Order.API.Services;
-using Domain.Common.Generators;
 
 namespace Order.API.Tests.Unit;
 

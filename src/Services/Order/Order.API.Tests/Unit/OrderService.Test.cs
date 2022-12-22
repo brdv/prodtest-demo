@@ -1,8 +1,8 @@
 ﻿using Domain.Common.Exceptions;
+using Domain.Common.Generators;
 using Domain.Common.Services;
 using Moq;
 using Order.API.Services;
-using Domain.Common.Generators;
 
 namespace Order.API.Tests.Unit;
 

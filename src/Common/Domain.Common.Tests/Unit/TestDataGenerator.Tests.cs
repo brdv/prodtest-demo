@@ -1,4 +1,4 @@
-using Domain.Common.Generators;
+﻿using Domain.Common.Generators;
 
 namespace Domain.Common.Tests.Unit;
 
