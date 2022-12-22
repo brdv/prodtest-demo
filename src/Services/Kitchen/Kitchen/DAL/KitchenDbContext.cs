@@ -13,10 +13,10 @@ public class KitchenDbContext : DbContext
 
     public DbSet<HandledOrder> HandledOrders => Set<HandledOrder>();
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        builder.Entity<HandledOrder>().HasKey(x => x.Id);
-        builder.Entity<HandledOrder>().ToTable("HandledOrders");
-        base.OnModelCreating(builder);
+        modelBuilder.Entity<HandledOrder>().HasKey(x => x.Id);
+        modelBuilder.Entity<HandledOrder>().ToTable("HandledOrders");
+        base.OnModelCreating(modelBuilder);
     }
 }

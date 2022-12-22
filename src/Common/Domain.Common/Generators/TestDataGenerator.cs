@@ -3,7 +3,7 @@ using Domain.Common.Models;
 
 namespace Domain.Common.Generators;
 
-public class TestDataGenerator
+public static class TestDataGenerator
 {
     public static HandledOrder GetTestHandledOrder()
     {
