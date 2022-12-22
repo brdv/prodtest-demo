@@ -6,7 +6,7 @@ namespace Kitchen.Services;
 public class KitchenService : IKitchenService
 {
     private readonly int _speed = 9;
-    private IKitchenRepository _kitchenRepository;
+    private readonly IKitchenRepository _kitchenRepository;
 
     public KitchenService(IKitchenRepository kitchenRepository)
     {
@@ -20,11 +20,6 @@ public class KitchenService : IKitchenService
 
         var handled = new HandledOrder(Guid.NewGuid(), order.Id, order.TotalPrepTime, actualPrepTime, tag);
 
-        Thread.Sleep(1000);
-
-        Console.WriteLine(handled);
-
         _kitchenRepository.AddHandledOrder(handled);
-
     }
 }

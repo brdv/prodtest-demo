@@ -9,7 +9,7 @@ public class KitchenDbContext : DbContext
     {
     }
 
-    public DbSet<HandledOrder> HandledOrders { get; set; }
+    public DbSet<HandledOrder> HandledOrders => Set<HandledOrder>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
