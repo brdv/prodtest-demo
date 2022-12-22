@@ -16,6 +16,5 @@ public class KitchenRepository : IKitchenRepository
     {
         await _context.AddAsync(order);
         await _context.SaveChangesAsync();
-        Console.WriteLine(order);
     }
 }
