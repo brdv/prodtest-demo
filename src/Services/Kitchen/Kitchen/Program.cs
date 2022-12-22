@@ -1,5 +1,7 @@
 ﻿using Domain.Common.Exceptions;
+using Kitchen.DAL;
 using Kitchen.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Kitchen;
@@ -32,7 +34,14 @@ internal class Program
 
         var builder = new ServiceCollection()
             .AddScoped<IKitchenService, KitchenService>()
+            .AddDbContext<KitchenDbContext>(options =>
+            {
+                options.UseSqlite("Data Source=sql.db");
+            })
+            .AddSingleton<IKitchenRepository, KitchenRepository>()
             .BuildServiceProvider();
+
+        builder.GetRequiredService<KitchenDbContext>().Database.EnsureCreated();
 
         var app = new KitchenWorker(versionSetting, RMQHost, builder.GetRequiredService<IKitchenService>());
 
