@@ -1,10 +1,21 @@
 ﻿using Domain.Common.Contracts;
 using Domain.Common.Models;
 
-namespace Order.API.Tests.TestData;
+namespace Domain.Common.Generators;
 
-public class OrderTestData
+public static class TestDataGenerator
 {
+    public static HandledOrder GetTestHandledOrder()
+    {
+        return new HandledOrder(
+            Guid.Parse("00000000-0000-0000-0000-000000000000"),
+            Guid.Parse("00000000-0000-0000-0000-000000000000"),
+            5,
+            6,
+            "testHandler"
+        );
+    }
+
     public static OrderModel GetTestOrderModel()
     {
         return new OrderModel(

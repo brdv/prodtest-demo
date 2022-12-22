@@ -1,8 +1,8 @@
 ﻿using Domain.Common.Exceptions;
+using Domain.Common.Generators;
 using Domain.Common.Services;
 using Moq;
 using Order.API.Services;
-using Order.API.Tests.TestData;
 
 namespace Order.API.Tests.Unit;
 
@@ -50,7 +50,7 @@ public class OrderServiceTests
 
         mock.Setup(service => service.PublishEvent(_rmqHost, It.IsAny<string>(), $"exchange-{_tag}")).Verifiable();
         var mockService = mock.Object;
-        var postData = OrderTestData.GetTestOrderCreate();
+        var postData = TestDataGenerator.GetTestOrderCreate();
         var service = new OrderService(mockService);
 
         // act
@@ -72,7 +72,7 @@ public class OrderServiceTests
 
         mock.Setup(service => service.PublishEvent(_rmqHost, It.IsAny<string>(), $"exchange-{_tag}")).Verifiable();
         var mockService = mock.Object;
-        var postData = OrderTestData.GetTestOrderCreate();
+        var postData = TestDataGenerator.GetTestOrderCreate();
         var service = new OrderService(mockService);
 
         // act "The environment variable 'DL_TAG_VERSION' was not set."
@@ -92,7 +92,7 @@ public class OrderServiceTests
 
         mock.Setup(service => service.PublishEvent(_rmqHost, It.IsAny<string>(), $"exchange-{_tag}")).Verifiable();
         var mockService = mock.Object;
-        var postData = OrderTestData.GetTestOrderCreate();
+        var postData = TestDataGenerator.GetTestOrderCreate();
         var service = new OrderService(mockService);
 
         // act
@@ -112,7 +112,7 @@ public class OrderServiceTests
 
         mock.Setup(service => service.PublishEvent(_rmqHost, It.IsAny<string>(), $"exchange-{_tag}")).Verifiable();
         var mockService = mock.Object;
-        var postData = OrderTestData.GetTestOrderCreate();
+        var postData = TestDataGenerator.GetTestOrderCreate();
         var service = new OrderService(mockService);
 
         // act

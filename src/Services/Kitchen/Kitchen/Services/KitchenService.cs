@@ -1,18 +1,17 @@
 ﻿using Domain.Common.Models;
+using Kitchen.DAL;
 
 namespace Kitchen.Services;
-
-public record HandledOrder(
-    Guid Id,
-    Guid OrderId,
-    int EstimatedPrepTime,
-    int ActualPrepTime,
-    string handler
-);
 
 public class KitchenService : IKitchenService
 {
     private readonly int _speed = 9;
+    private readonly IKitchenRepository _kitchenRepository;
+
+    public KitchenService(IKitchenRepository kitchenRepository)
+    {
+        _kitchenRepository = kitchenRepository;
+    }
 
     public void HandleOrder(OrderModel order, string tag)
     {
@@ -21,8 +20,6 @@ public class KitchenService : IKitchenService
 
         var handled = new HandledOrder(Guid.NewGuid(), order.Id, order.TotalPrepTime, actualPrepTime, tag);
 
-        Thread.Sleep(1000);
-
-        Console.WriteLine(handled);
+        _kitchenRepository.AddHandledOrder(handled);
     }
 }
