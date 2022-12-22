@@ -11,14 +11,14 @@ namespace Kitchen;
 
 internal class KitchenWorker
 {
-    private readonly string versionSetting;
+    private readonly string _vtag;
     private readonly string RMQHost;
     private readonly IKitchenService _service;
 
     public KitchenWorker(IKitchenService service, IConfiguration config)
     {
-        versionSetting = config["DL_INTERNAL_TAG"];
-        RMQHost = config["RMQ_HOST"];
+        _vtag = config["DL_INTERNAL_TAG"] ?? "Vdev";
+        RMQHost = config["RMQ_HOST"] ?? "localhost";
         _service = service;
     }
 
@@ -28,11 +28,11 @@ internal class KitchenWorker
         using (var connection = factory.CreateConnection())
         using (var channel = connection.CreateModel())
         {
-            channel.ExchangeDeclare("dl-exchange", ExchangeType.Fanout);
+            channel.ExchangeDeclare($"dl-exchange-{_vtag}", ExchangeType.Fanout);
 
             var queueName = channel.QueueDeclare().QueueName;
 
-            channel.QueueBind(queue: queueName, exchange: "dl-exchange", routingKey: "");
+            channel.QueueBind(queue: queueName, exchange: $"dl-exchange-{_vtag}", routingKey: "");
 
             var consumer = new EventingBasicConsumer(channel);
 
@@ -43,7 +43,7 @@ internal class KitchenWorker
                 var order = JsonSerializer.Deserialize<OrderModel>(decodedBody);
                 if (order != null)
                 {
-                    _service.HandleOrder(order, versionSetting);
+                    _service.HandleOrder(order, _vtag);
                 }
                 else
                 {
