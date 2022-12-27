@@ -1,6 +1,7 @@
 ﻿using Domain.Common.Exceptions;
 using Domain.Common.Generators;
 using Domain.Common.Services;
+using Microsoft.Extensions.Configuration;
 using Moq;
 using Order.API.Services;
 
@@ -9,26 +10,25 @@ namespace Order.API.Tests.Unit;
 [TestClass]
 public class OrderServiceTests
 {
-    private readonly string _tag = "Vtest";
-    private readonly string _rmqHost = "testhost";
-
-    [TestInitialize]
-    public void TestInit()
+    public static IConfiguration InitConfiguration()
     {
-        Environment.SetEnvironmentVariable("DL_TAG_VERSION", "Vtest");
-        Environment.SetEnvironmentVariable("RMQ_HOST", "testhost");
-        Environment.SetEnvironmentVariable("DOTNET_ENVIRONMENT", "test");
+        var config = new ConfigurationBuilder()
+           .AddJsonFile("appsettings.test.json")
+            .AddEnvironmentVariables()
+            .Build();
+        return config;
     }
 
     [TestMethod]
     public void GetMenuItems_Returns_Default_List()
     {
         var mock = new Mock<IRabbitMQService>(MockBehavior.Strict);
+        var config = InitConfiguration();
 
-        mock.Setup(service => service.PublishEvent(_rmqHost, It.IsAny<string>(), $"exchange-{_tag}")).Verifiable();
+        mock.Setup(service => service.PublishEvent(config["RMQ_HOST"], It.IsAny<string>(), config["DL_INTERNAL_TAG"])).Verifiable();
         var mockService = mock.Object;
 
-        var service = new OrderService(mockService);
+        var service = new OrderService(mockService, config);
 
         var result = service.GetMenuItems();
 
@@ -46,80 +46,21 @@ public class OrderServiceTests
     public void AddOrder_Maps_Items_Correctly()
     {
         // arrange
+        var config = InitConfiguration();
         var mock = new Mock<IRabbitMQService>(MockBehavior.Strict);
 
-        mock.Setup(service => service.PublishEvent(_rmqHost, It.IsAny<string>(), $"exchange-{_tag}")).Verifiable();
+        mock.Setup(service => service.PublishEvent(config["RMQ_HOST"], It.IsAny<string>(), $"dl-exchange-{config["DL_INTERNAL_TAG"]}")).Verifiable();
         var mockService = mock.Object;
         var postData = TestDataGenerator.GetTestOrderCreate();
-        var service = new OrderService(mockService);
+        var service = new OrderService(mockService, config);
 
         // act
         var result = service.AddOrder(postData);
-        mock.Verify(mock => mock.PublishEvent(_rmqHost, It.IsAny<string>(), $"exchange-{_tag}"), Times.AtLeast(1));
+        mock.Verify(mock => mock.PublishEvent(config["RMQ_HOST"], It.IsAny<string>(), $"dl-exchange-{config["DL_INTERNAL_TAG"]}"), Times.AtLeast(1));
 
         // assert
         Assert.IsNotNull(result);
         Assert.AreEqual(postData.MenuItems.Count, result.Items.Count);
         Assert.IsInstanceOfType(result.Id, typeof(Guid));
-    }
-
-    [TestMethod]
-    public void AddOrder_ThrowsException_IfNoDLTagVersionInEnvironment()
-    {
-        Environment.SetEnvironmentVariable("DL_TAG_VERSION", "");
-        // arrange
-        var mock = new Mock<IRabbitMQService>(MockBehavior.Strict);
-
-        mock.Setup(service => service.PublishEvent(_rmqHost, It.IsAny<string>(), $"exchange-{_tag}")).Verifiable();
-        var mockService = mock.Object;
-        var postData = TestDataGenerator.GetTestOrderCreate();
-        var service = new OrderService(mockService);
-
-        // act "The environment variable 'DL_TAG_VERSION' was not set."
-        Assert.ThrowsException<EnvironmentVariableException>(() => service.AddOrder(postData));
-        var correctMessage = Assert.ThrowsException<EnvironmentVariableException>(() => service.AddOrder(postData))
-            .Message.Equals("The environment variable 'DL_TAG_VERSION' was not set.");
-
-        Assert.IsTrue(correctMessage);
-    }
-
-    [TestMethod]
-    public void AddOrder_ThrowsException_IfNoRMQHostInEnvironment()
-    {
-        Environment.SetEnvironmentVariable("RMQ_HOST", "");
-
-        var mock = new Mock<IRabbitMQService>(MockBehavior.Strict);
-
-        mock.Setup(service => service.PublishEvent(_rmqHost, It.IsAny<string>(), $"exchange-{_tag}")).Verifiable();
-        var mockService = mock.Object;
-        var postData = TestDataGenerator.GetTestOrderCreate();
-        var service = new OrderService(mockService);
-
-        // act
-        Assert.ThrowsException<EnvironmentVariableException>(() => service.AddOrder(postData));
-        var correctMessage = Assert.ThrowsException<EnvironmentVariableException>(() => service.AddOrder(postData))
-            .Message.Equals("The environment variable 'RMQ_HOST' was not set.");
-
-        Assert.IsTrue(correctMessage);
-    }
-
-    [TestMethod]
-    public void AddOrder_ThrowsException_IfNoDotnetEnvInEnvironment()
-    {
-        Environment.SetEnvironmentVariable("DOTNET_ENVIRONMENT", "");
-
-        var mock = new Mock<IRabbitMQService>(MockBehavior.Strict);
-
-        mock.Setup(service => service.PublishEvent(_rmqHost, It.IsAny<string>(), $"exchange-{_tag}")).Verifiable();
-        var mockService = mock.Object;
-        var postData = TestDataGenerator.GetTestOrderCreate();
-        var service = new OrderService(mockService);
-
-        // act
-        Assert.ThrowsException<EnvironmentVariableException>(() => service.AddOrder(postData));
-        var correctMessage = Assert.ThrowsException<EnvironmentVariableException>(() => service.AddOrder(postData))
-            .Message.Equals("The environment variable 'DOTNET_ENVIRONMENT' was not set.");
-
-        Assert.IsTrue(correctMessage);
     }
 }
