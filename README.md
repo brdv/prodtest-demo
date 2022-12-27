@@ -180,3 +180,5 @@ There are a few other commands that can be helpfull during testing or developmen
    ```
 
    Now open the browser at http://localhost:15672 and log in with the credentials in your console.
+
+sh ./scripts/docker/build-prodtest-images latest;sh ./scripts/docker/build-prodtest-images vnext; sh ./scripts/kubernetes/setup-infra.sh;sh ./scripts/kubernetes/setup-darklaunch.sh

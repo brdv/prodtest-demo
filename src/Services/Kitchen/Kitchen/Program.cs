@@ -28,7 +28,7 @@ internal class Program
 
         var config = configBuilder.Build();
 
-        Console.WriteLine($"Connecting to server: {config["DB_URL"]}; user: {config["DB_USER"]}; password: {config["DB_PWD"]}");
+        Console.WriteLine($"Connecting to server: {config["DB_URL"]}; user: {config["DB_USER"]}; password: {config["DB_PWD"]}; with version {Environment.GetEnvironmentVariable("PRODTEST_VERSION")}");
 
         var builder = new ServiceCollection()
             .AddScoped<IKitchenService, KitchenService>()
