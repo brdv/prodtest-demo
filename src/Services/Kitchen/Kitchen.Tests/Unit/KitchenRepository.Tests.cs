@@ -1,8 +1,5 @@
 ﻿using Domain.Common.Generators;
-using Domain.Common.Models;
 using Kitchen.DAL;
-using Kitchen.Services;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 
 namespace Kitchen.Tests.Unit;

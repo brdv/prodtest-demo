@@ -15,8 +15,12 @@ public class KitchenDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        var dotnetEnv = Environment.GetEnvironmentVariable("PRODTEST_VERSION");
+        var env = dotnetEnv != null ? dotnetEnv : "development";
+        var tableName = env == "latest" ? "HandledOrders" : "HandledOrders-shadow";
+
         modelBuilder.Entity<HandledOrder>().HasKey(x => x.Id);
-        modelBuilder.Entity<HandledOrder>().ToTable("HandledOrders");
+        modelBuilder.Entity<HandledOrder>().ToTable(tableName);
         base.OnModelCreating(modelBuilder);
     }
 }

@@ -20,7 +20,7 @@ public class KitchenServiceTests
         var order = TestDataGenerator.GetTestOrderModel();
 
         // Act
-        service.HandleOrder(order, "tag");
+        service.HandleOrder(order);
 
         // Assert
         mock.Verify(repo => repo.AddHandledOrder(It.IsAny<HandledOrder>()));
