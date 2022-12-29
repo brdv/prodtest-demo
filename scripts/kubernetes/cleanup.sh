@@ -30,7 +30,7 @@ kubectl delete pvc datadir-prodtest-db-0
 kubectl delete namespaces mysql-operator
 
 helm uninstall traefik-dl
-helm uninstall mysql-operator -n mysql-operator
+helm uninstall mysql-operator
 
 helm delete prodtest-db
 
