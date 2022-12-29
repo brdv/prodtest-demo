@@ -5,12 +5,12 @@ kubectl exec --stdin --tty prodtest-db-0 -- /bin/mysqlsh --sql -u prodtest -ppro
 kubectl exec --stdin --tty prodtest-db-0 -- /bin/mysqlsh --sql -u prodtest -pprodtest-dl -e "create table if not exists prodtest.HandledOrdersShadow(    Id                char(36) not null        primary key,    OrderId           char(36) not null,    EstimatedPrepTime int      not null,    ActualPrepTime    int      not null);"
 
 # secondly, apply the prodtest configurations
-# kubectl apply -f ./manifests/ingresscrd-prodtest.yaml \
-#               -f ./manifests/order-service.latest.yaml \
-#               -f ./manifests/order-service.next.yaml \
-#               -f ./manifests/kitchen-service.latest.yaml \
-#               -f ./manifests/kitchen-service.next.yaml \
-#               -f ./manifests/traefik-service-mirror.yaml
+kubectl apply -f ./manifests/ingresscrd-prodtest.yaml \
+              -f ./manifests/order-service.latest.yaml \
+              -f ./manifests/order-service.next.yaml \
+              -f ./manifests/kitchen-service.latest.yaml \
+              -f ./manifests/kitchen-service.next.yaml \
+              -f ./manifests/traefik-service-mirror.yaml
 
 
 
