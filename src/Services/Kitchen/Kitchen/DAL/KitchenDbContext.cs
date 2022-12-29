@@ -17,7 +17,7 @@ public class KitchenDbContext : DbContext
     {
         var dotnetEnv = Environment.GetEnvironmentVariable("PRODTEST_VERSION");
         var env = dotnetEnv != null ? dotnetEnv : "development";
-        var tableName = env == "latest" ? "HandledOrders" : "HandledOrders-shadow";
+        var tableName = env == "latest" ? "HandledOrders" : "HandledOrdersShadow";
 
         modelBuilder.Entity<HandledOrder>().HasKey(x => x.Id);
         modelBuilder.Entity<HandledOrder>().ToTable(tableName);
