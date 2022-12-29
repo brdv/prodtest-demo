@@ -1,4 +1,5 @@
-﻿using Domain.Common.Services;
+﻿// Stryker disable all : Program.cs not tested
+using Domain.Common.Services;
 using Order.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);

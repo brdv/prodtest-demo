@@ -43,11 +43,6 @@ public class OrderService : IOrderService
 
     private void PublishNewOrder(OrderModel order)
     {
-        Console.WriteLine($"Tag: {_configuration["DL_INTERNAL_TAG"]}; RmqHost: {_configuration["RMQ_HOST"]} ");
-        foreach (var d in _configuration.AsEnumerable())
-        {
-            Console.WriteLine($"{d.Key}: {d.Value}");
-        }
         var serializedOrder = JsonSerializer.Serialize(order);
         var versionTag = _configuration["DL_INTERNAL_TAG"];
 
