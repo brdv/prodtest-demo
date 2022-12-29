@@ -4,5 +4,5 @@ namespace Kitchen.Services;
 
 public interface IKitchenService
 {
-    void HandleOrder(OrderModel order, string tag);
+    void HandleOrder(OrderModel order);
 }

@@ -19,12 +19,3 @@ spec:
         - name: kitchen-service-next
           image: kitchen-service:vnext
           imagePullPolicy: Never # > This option is set to never to use local images.
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: kitchen-service-next
-
-spec:
-  selector:
-    app: kitchen-service-next

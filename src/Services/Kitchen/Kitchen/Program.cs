@@ -5,6 +5,7 @@ using Kitchen.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MySql.EntityFrameworkCore.Extensions;
 
 namespace Kitchen;
 
@@ -13,11 +14,11 @@ internal class Program
     protected Program() { }
     private static void Main(string[] args)
     {
-        var inEnv = Environment.GetEnvironmentVariable("DOTNET_ENV");
+        var inEnv = Environment.GetEnvironmentVariable("PRODTEST_VERSION");
         var env = inEnv != null ? inEnv : "DEV";
 
         var settingsFile = "appsettings.json";
-        if (env != "PRODUCTION")
+        if (env != "latest")
         {
             settingsFile = $"appsettings.{env.ToLower()}.json";
         }
@@ -27,14 +28,14 @@ internal class Program
 
         var config = configBuilder.Build();
 
-        Console.WriteLine($"Rabbit Host: {config["RMQ_HOST"]}; Version: {config["DL_INTERNAL_TAG"]}");
+        Console.WriteLine($"Connecting to server: {config["DB_URL"]}; user: {config["DB_USER"]}; password: {config["DB_PWD"]}; with version {Environment.GetEnvironmentVariable("PRODTEST_VERSION")}");
 
         var builder = new ServiceCollection()
             .AddScoped<IKitchenService, KitchenService>()
             .AddSingleton<IConfiguration>(config)
             .AddDbContext<KitchenDbContext>(options =>
             {
-                options.UseSqlite($"Data Source={config["DL_INTERNAL_TAG"]}-sql.db");
+                options.UseMySQL($"server={config["DB_URL"]};database=prodtest;user={config["DB_USER"]};password={config["DB_PWD"]}");
             })
             .AddSingleton<IKitchenRepository, KitchenRepository>()
             .BuildServiceProvider();

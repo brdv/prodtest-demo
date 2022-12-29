@@ -14,7 +14,6 @@ public class Test_TestDataGenerators
         Assert.AreEqual(Guid.Parse("00000000-0000-0000-0000-000000000000"), result.OrderId);
         Assert.IsNotNull(result.ActualPrepTime);
         Assert.IsNotNull(result.EstimatedPrepTime);
-        Assert.IsFalse(string.IsNullOrEmpty(result.handler));
     }
 
     [TestMethod]

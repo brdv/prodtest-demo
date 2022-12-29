@@ -13,12 +13,12 @@ public class KitchenService : IKitchenService
         _kitchenRepository = kitchenRepository;
     }
 
-    public void HandleOrder(OrderModel order, string tag)
+    public void HandleOrder(OrderModel order)
     {
         var prepXSpeed = order.TotalPrepTime * 10 / (double)_speed;
         var actualPrepTime = (int)(Math.Round(prepXSpeed, 0));
 
-        var handled = new HandledOrder(Guid.NewGuid(), order.Id, order.TotalPrepTime, actualPrepTime, tag);
+        var handled = new HandledOrder(Guid.NewGuid(), order.Id, order.TotalPrepTime, actualPrepTime);
 
         _kitchenRepository.AddHandledOrder(handled);
     }

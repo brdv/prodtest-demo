@@ -4,6 +4,5 @@ public record HandledOrder(
     Guid Id,
     Guid OrderId,
     int EstimatedPrepTime,
-    int ActualPrepTime,
-    string handler
+    int ActualPrepTime
 );

@@ -11,8 +11,7 @@ public static class TestDataGenerator
             Guid.Parse("00000000-0000-0000-0000-000000000000"),
             Guid.Parse("00000000-0000-0000-0000-000000000000"),
             5,
-            6,
-            "testHandler"
+            6
         );
     }
 
