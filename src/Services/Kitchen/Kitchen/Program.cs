@@ -2,9 +2,9 @@
 using Domain.Common.Exceptions;
 using Kitchen.DAL;
 using Kitchen.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 using MySql.EntityFrameworkCore.Extensions;
 
 namespace Kitchen;
@@ -48,7 +48,3 @@ internal class Program
         app.Run();
     }
 }
-
-
-// CREATE USER 'prodtest'@'localhost' IDENTIFIED BY 'Prodtest!23';
-// GRANT ALL PRIVILEGES ON prodtest.* TO 'prodtest'@'localhost';

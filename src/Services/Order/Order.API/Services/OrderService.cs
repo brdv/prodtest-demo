@@ -44,7 +44,7 @@ public class OrderService : IOrderService
     private void PublishNewOrder(OrderModel order)
     {
         Console.WriteLine($"Tag: {_configuration["DL_INTERNAL_TAG"]}; RmqHost: {_configuration["RMQ_HOST"]} ");
-        foreach (KeyValuePair<string, string> d in _configuration.AsEnumerable())
+        foreach (var d in _configuration.AsEnumerable())
         {
             Console.WriteLine($"{d.Key}: {d.Value}");
         }
