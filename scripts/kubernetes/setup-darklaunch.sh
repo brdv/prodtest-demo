@@ -12,8 +12,6 @@ kubectl apply -f ./manifests/ingresscrd-prodtest.yaml \
               -f ./manifests/kitchen-service.next.yaml \
               -f ./manifests/traefik-service-mirror.yaml
 
-
-
 # check if everything is up and running
 kubectl get all
 

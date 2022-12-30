@@ -21,7 +21,8 @@ The contents of this Readme are:
 - [Prerequisites](#prerequisites)
 - [Setup](#setup)
 - [Checking the demo project](#checking-the-demo-project)
-- [Other commands](#useful-scripts)
+- [Useful scripts](#useful-scripts)
+- [Troubleshooting](#troubleshooting)
 
 ## Prerequisites
 
@@ -64,14 +65,22 @@ Follow the guide below to setup and start the project.
 
     \* you can see if docker-desktop is selecten in the output of command 1.
 
+TL;DR;
+
+If you want to get everything up and running quickly, you can enter the following command and skip step 3-5:
+
+```bash
+sh ./scripts/docker/build-prodtest-images.sh latest;sh ./scripts/docker/build-prodtest-images.sh vnext; sh ./scripts/kubernetes/setup-infra.sh;sh ./scripts/kubernetes/setup-darklaunch.sh
+```
+
 3.  Build all docker images (locally)
 
-    Run the build scripts
+    Run the build scripts to create local docker images.
 
     ```bash
     # from the projects root folder:
-    sh ./scripts/docker/latest.build.sh
-    sh ./scripts/docker/next.build.sh
+    sh ./scripts/docker/build-prodtest-images.sh latest
+    sh ./scripts/docker/build-prodtest-images.sh vnext
     ```
 
 4.  Apply infrastructure resources:
@@ -132,10 +141,26 @@ Nice job, you've successfully set up all resources for this demo project. You ca
 
    After running the script, you can check the responses of the API in `temp/request_output.json`. Thereby you can check the metrics endpoint in step `3`, however, currently this is a bit cryptic.
 
-5. Check the logs of the kitchen service by running the following script:
+5. Check the database:
+
+   To check the database you can do two thing: open a database management tool and connect to it (you have to port-forward the pod) or directly connect to the pod and run the mysqlsh CLI.
+
+   The default database user is `prodtest` and the default password is `prodtest-dl`.
+
+   To port-forward the pod:
 
    ```bash
-   sh ./scripts/kubernetes/get-kitchen-logs.sh
+   kubectl port-forward service/prodtest-db 13306:3306
+   ```
+
+   Note: this binds the local port `13306` to the default MySql port in the database pod. This is done to make sure no errors occur when you have a local MySql database running.
+
+   You can now make a connection to the database from your preferred database management tool (i.e. datagrip, sequelace).
+
+   To interact via the MySql sh CLI enter the following:
+
+   ```bash
+   kubectl exec --stdin --tty prodtest-db-0 -- /bin/mysqlsh --sql -u prodtest
    ```
 
 ## Useful scripts
@@ -150,6 +175,9 @@ There are a few other commands that can be helpfull during testing or developmen
    sh ./scripts/kubernetes/cleanup.sh
    ```
 
+   \* **Note:** This script may take some time due to shutdown time of some pods.
+   In some cases, the cleanup script does not successfully delete all database pods. The reason why this happens is yet unknown. You can hard delete it by resetting your Docker Desktop Kubernetes cluster or deleting all docker containers prefixed with `k8s_`. If this still does not work, please [open a new issue](https://github.com/brdv/prodtest-demo/issues/new/choose).
+
 2. Simulate API requests
 
    In order to simulate API requests, you can use the script `simulate_api_calls.sh`. This script will by default call the api 500 times and save the responses to `temp/request_output.json`.
@@ -161,17 +189,7 @@ There are a few other commands that can be helpfull during testing or developmen
 
    \* _In case of an error like 'jq command does not exist' [install jq](https://stedolan.github.io/jq/download/)_
 
-3. Check KitchenService logs
-
-   Make sure you posted at least one order or ran the simulation script.
-
-   ```bash
-   sh ./scripts/kubernetes/get-kitchen-logs.sh
-   ```
-
-   If the setup went right, you should see a HandledOrder object with the same OrderId on both services. The Id is different and the handler as well (to demonstrate the dark launch).
-
-4. Check RabbitMQ dashboard
+3. Check RabbitMQ dashboard
 
    You can access the RabbitMQ dashboard by port forewarding its instance.
 
@@ -181,4 +199,16 @@ There are a few other commands that can be helpfull during testing or developmen
 
    Now open the browser at http://localhost:15672 and log in with the credentials in your console.
 
-sh ./scripts/docker/build-prodtest-images latest;sh ./scripts/docker/build-prodtest-images vnext; sh ./scripts/kubernetes/setup-infra.sh;sh ./scripts/kubernetes/setup-darklaunch.sh
+\* **Note:** In some cases, the cleanup script does not successfully delete all database pods. The reason why this happens is yet unknown. You can hard delete it by resetting your Docker Desktop Kubernetes cluster or deleting all docker containers prefixed with `k8s_`. If this still does not work, please [open a new issue](https://github.com/brdv/prodtest-demo/issues/new/choose).
+
+sh ./scripts/docker/build-prodtest-images latest
+sh ./scripts/docker/build-prodtest-images.sh lates
+
+## Troubleshooting
+
+This section contains known issues and how to fix them.
+
+1. traefik-dl service external-ip \<pending\>
+
+   If the api is not reachable, this probably happened because the external ip for the traefik proxy (service/traefik-dl) is pending (run `kubectl get service` to check). This is most likely caused because you have something else running locally that uses port 80. To fix this issue, close all apps that use port 80 on your machine. If this still does not work, restart your machine and try again.<br>
+   If the issue persists, please open an issue and provide your `kubectl get service` output.
