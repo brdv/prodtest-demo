@@ -1,5 +1,4 @@
 ﻿using Domain.Common.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Kitchen.DAL;
 
