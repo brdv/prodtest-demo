@@ -1,0 +1,14 @@
+name: kitchenservice
+
+on:
+  pull_request:
+    branches:
+      - main
+      - 'sprint/**'
+
+jobs:
+  run-checks:
+    uses: brdv/prodtest-demo/.github/workflows/service-check.yaml@sprint/4
+    with:
+      project_dir: 'src/Services/Kitchen/Kitchen'
+      test_project: 'src/Services/Kitchen/Kitchen.Tests/'

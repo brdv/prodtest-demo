@@ -34,7 +34,7 @@ In order to run the project, please make sure the following tools are installed:
 
 \* **Note:** Please use [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) if you are on windows
 
-To check if everyting is installed correctly, run the following commands:
+To check if everything is installed correctly, run the following commands:
 
 ```bash
 # for docker
@@ -51,7 +51,7 @@ If it outputs a version number, the installation has succeeded.
 
 Follow the guide below to setup and start the project.
 
-1.  Once all prerquisites are installed, make sure you have a docker kubernetes cluster running following [this guide](https://docs.docker.com/desktop/kubernetes/#enable-kubernetes).
+1.  Once all prerequisites are installed, make sure you have a docker kubernetes cluster running following [this guide](https://docs.docker.com/desktop/kubernetes/#enable-kubernetes).
 
 2.  Next make sure the docker-desktop kubernetes context is selected for kubectl:
 
@@ -59,11 +59,11 @@ Follow the guide below to setup and start the project.
     # 1) get all contexts
     kubectl config get-contexts
 
-    # 2) set docker-desktop context if not set allready *
+    # 2) set docker-desktop context if not set already *
     kubectl config set-context docker-desktop
     ```
 
-    \* you can see if docker-desktop is selecten in the output of command 1.
+    \* you can see if docker-desktop is selected in the output of command 1.
 
 TL;DR;
 
@@ -94,7 +94,7 @@ sh ./scripts/docker/build-prodtest-images.sh latest;sh ./scripts/docker/build-pr
 
     **NOTE**: Because it takes some time for the infrastructure to be completed; the script waits 30 secs.
 
-5.  Apply other kubernetes resourcess
+5.  Apply other kubernetes resources
 
     ```bash
     # from the projects root folder:
@@ -165,7 +165,7 @@ Nice job, you've successfully set up all resources for this demo project. You ca
 
 ## Useful scripts
 
-There are a few other commands that can be helpfull during testing or development.
+There are a few other commands that can be helpful during testing or development.
 
 1. Cleanup kubernetes and helm charts
 
@@ -191,7 +191,7 @@ There are a few other commands that can be helpfull during testing or developmen
 
 3. Check RabbitMQ dashboard
 
-   You can access the RabbitMQ dashboard by port forewarding its instance.
+   You can access the RabbitMQ dashboard by port forwarding its instance.
 
    ```bash
    sh ./scripts/pfw-rabbitmq.sh
@@ -200,9 +200,6 @@ There are a few other commands that can be helpfull during testing or developmen
    Now open the browser at http://localhost:15672 and log in with the credentials in your console.
 
 \* **Note:** In some cases, the cleanup script does not successfully delete all database pods. The reason why this happens is yet unknown. You can hard delete it by resetting your Docker Desktop Kubernetes cluster or deleting all docker containers prefixed with `k8s_`. If this still does not work, please [open a new issue](https://github.com/brdv/prodtest-demo/issues/new/choose).
-
-sh ./scripts/docker/build-prodtest-images latest
-sh ./scripts/docker/build-prodtest-images.sh lates
 
 ## Troubleshooting
 
