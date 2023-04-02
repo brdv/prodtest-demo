@@ -5,7 +5,7 @@ namespace Kitchen.Services;
 
 public class KitchenService : IKitchenService
 {
-    private readonly int _speed = 9;
+    private readonly int _speed = 14;
     private readonly IKitchenRepository _kitchenRepository;
 
     public KitchenService(IKitchenRepository kitchenRepository)
